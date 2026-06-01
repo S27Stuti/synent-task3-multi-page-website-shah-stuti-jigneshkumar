@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Page</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+  background:#020617;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* Container */
+.course-container{
+  width:90%;
+  max-width:900px;
+  text-align:center;
+}
+
+/* Title */
+.title{
+  font-size:36px;
+  margin-bottom:25px;
+  background: linear-gradient(45deg,#D4A943,#D4A943);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* Card */
+.course-card{
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Video */
+.video-box{
+  width:100%;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.video-box iframe{
+  width:100%;
+  height:350px;
+  border-radius:15px;
+}
+
+/* Info */
+.course-info{
+  margin-top:20px;
+}
+
+.course-info h2{
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.creator{
+  color:#94a3b8;
+  margin-bottom:15px;
+}
+
+/* Details */
+.details{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  margin-bottom:20px;
+}
+
+.details span{
+  color:#D4A943;
+  font-weight:bold;
+}
+
+/* Button */
+.quiz-btn{
+  background:linear-gradient(45deg,#D4A943,#D4A943);
+  border:none;
+  padding:12px 25px;
+  border-radius:25px;
+  color:black;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.quiz-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #D4A943;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .video-box iframe{
+    height:220px;
+  }
+
+  .details{
+    flex-direction:column;
+    gap:10px;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<div class="course-container">
+
+  <h1 class="title">Backend Development</h1>
+  <style>
+    h1{
+        color: #D4A943;
+    }
+  </style>
+
+  <div class="course-card">
+
+    <!-- Video -->
+    <div class="video-box">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/0IciwnJ6PJI?si=Wq2JkMWpiGuWuwfE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <!-- Course Info -->
+    <div class="course-info">
+      <h2>Backend Development</h2>
+      <p class="creator">By WsCube Tech</p>
+
+      <div class="details">
+        <p>⭐ Rating: <span>4.8</span></p>
+        <p>⏱ Total Hours: <span>9:34 Hours</span></p>
+      </div>
+
+      <a href="beqz.html" target="_blank"> <button class="quiz-btn" onclick="startQuiz()">Start Quiz →</button></a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// Button click action
+function startQuiz(){
+  alert("Quiz Started 🚀 (You can redirect to quiz page here)");
+}
+
+// Optional: Change video dynamically (future use)
+function changeVideo(link){
+  document.getElementById("courseVideo").src = link;
+}
+</script>
+
+</body>
+</html>

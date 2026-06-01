@@ -1,0 +1,151 @@
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:#000; /* PURE BLACK */
+  color:white;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  margin:20px;
+  padding:8px 15px;
+  border:none;
+  border-radius:20px;
+  background:#222;
+  color:white;
+  cursor:pointer;
+}
+.back-btn:hover{
+  background:#ffd700;
+  color:black;
+}
+
+/* MAIN CARD */
+.job-container{
+  max-width:900px;
+  margin:20px auto;
+  background:#111;
+  padding:30px;
+  border-radius:15px;
+}
+
+/* TITLE */
+h1{
+  color:#a855f7;
+  margin-bottom:5px;
+}
+
+.company{
+  color:#aaa;
+}
+
+/* WFH */
+.wfh{
+  margin:10px 0;
+  color:#ddd;
+}
+
+/* INFO */
+.info-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  font-size:14px;
+  margin:10px 0;
+}
+
+/* TAGS */
+.tags{
+  margin:10px 0;
+}
+.tags span{
+  padding:5px 12px;
+  border-radius:10px;
+  font-size:13px;
+  margin-right:10px;
+}
+
+.green{
+  background:#22c55e;
+  color:black;
+}
+
+.purple{
+  background:#a855f7;
+}
+
+/* LIST */
+ul{
+  margin-left:20px;
+  color:#ddd;
+}
+
+/* SKILLS */
+.skills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.skills span{
+  background:#222;
+  padding:6px 12px;
+  border-radius:10px;
+}
+
+/* PERKS */
+.perks{
+  display:flex;
+  gap:10px;
+}
+.perks span{
+  background:#222;
+  padding:6px 12px;
+  border-radius:10px;
+}
+
+/* OPENING */
+.opening{
+  margin-top:15px;
+}
+
+/* APPLY BUTTON */
+.apply-btn{
+  margin-top:20px;
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(45deg,gold,gold);
+  color:rgb(0, 0, 0);
+  cursor:pointer;
+}
+.apply-btn:hover{
+  opacity:0.8;
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  background:#111;
+  padding:30px;
+  border-radius:10px;
+  text-align:center;
+}
+.popup-box button{
+  margin-top:10px;
+  padding:8px 15px;
+  border:none;
+  background:#a855f7;
+  color:white;
+  border-radius:5px;
+}

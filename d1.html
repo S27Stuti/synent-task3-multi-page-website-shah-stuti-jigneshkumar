@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI/UX Course</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+  background:#020617;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* Container */
+.course-container{
+  width:90%;
+  max-width:900px;
+  text-align:center;
+}
+
+/* Title */
+.title{
+  font-size:36px;
+  margin-bottom:25px;
+  background: linear-gradient(45deg,#D4A943,#D4A943);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* Card */
+.course-card{
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Video */
+.video-box{
+  width:100%;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.video-box iframe{
+  width:100%;
+  height:350px;
+  border-radius:15px;
+}
+
+/* Info */
+.course-info{
+  margin-top:20px;
+}
+
+.course-info h2{
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.creator{
+  color:#94a3b8;
+  margin-bottom:15px;
+}
+
+/* Details */
+.details{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  margin-bottom:20px;
+}
+
+.details span{
+  color:#D4A943;
+  font-weight:bold;
+}
+
+/* Button */
+.quiz-btn{
+  background:linear-gradient(45deg,#D4A943,#D4A943);
+  border:none;
+  padding:12px 25px;
+  border-radius:25px;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.quiz-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #D4A943;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .video-box iframe{
+    height:220px;
+  }
+
+  .details{
+    flex-direction:column;
+    gap:10px;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<div class="course-container">
+
+  <h1 class="title">UI/UX Design</h1>
+
+  <div class="course-card">
+
+    <!-- Video -->
+    <div class="video-box">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/3m0TXas0Vjw?si=6xYr_zJ5-x7fHYsC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <!-- Course Info -->
+    <div class="course-info">
+      <h2>UI/UX Design Full Course (Figma + UX Basics)</h2>
+      <p class="creator">By Your Creator Name</p>
+
+      <div class="details">
+        <p>⭐ Rating: <span>4.9</span></p>
+        <p>⏱ Total Hours: <span>8+ Hours</span></p>
+      </div>
+
+      <a href="uiuxq.html" target="_blank">
+        <button class="quiz-btn" onclick="startQuiz()" style="color:black;">Start Quiz →</button>
+        <style>
+            .quiz.html{
+                color:black;
+            }
+        </style>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function startQuiz(){
+  alert("UI/UX Quiz Started 🎨");
+}
+</script>
+
+</body>
+</html>

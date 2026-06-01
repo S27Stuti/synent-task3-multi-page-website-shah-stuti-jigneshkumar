@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphic Design Quiz – InternConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#020617;
+  --card:#0f172a;
+  --border:#1e293b;
+  --accent:#ffcc00;
+  --accent2:#f97316;
+  --text:#e2e8f0;
+  --muted:#64748b;
+  --green:#22c55e;
+  --red:#ef4444;
+  --purple:#7c3aed;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+.header{
+  background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+  border-bottom:1px solid #1e293b;
+  padding:16px 24px;
+  display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:100;
+}
+.logo-mark{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:18px;color:#000;
+  font-family:'Playfair Display',serif;flex-shrink:0;
+}
+.logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;letter-spacing:-0.3px;}
+.logo-text span{color:var(--accent);}
+
+.name-overlay{
+  position:fixed;inset:0;
+  background:rgba(2,6,23,0.96);
+  backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  z-index:999;padding:20px;
+}
+.name-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:48px 40px;
+  max-width:480px;width:100%;text-align:center;
+  box-shadow:0 25px 60px rgba(0,0,0,0.5);
+  animation:slideUp 0.4s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.name-card .ic-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px;}
+.name-card h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:8px;}
+.name-card p{color:var(--muted);font-size:14px;margin-bottom:28px;line-height:1.6;}
+.input-group{margin-bottom:16px;text-align:left;}
+.input-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+.input-group input{
+  width:100%;background:#1e293b;border:1px solid #334155;
+  border-radius:10px;padding:12px 16px;
+  color:white;font-family:'DM Sans',sans-serif;font-size:15px;
+  outline:none;transition:0.2s;
+}
+.input-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,204,0,0.15);}
+.start-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#000;border:none;border-radius:12px;
+  padding:14px;font-weight:700;font-size:16px;
+  cursor:pointer;margin-top:8px;transition:0.2s;
+  font-family:'DM Sans',sans-serif;
+}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(255,204,0,0.3);}
+
+.container{max-width:860px;margin:auto;padding:32px 20px 60px;}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
+.quiz-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;}
+.quiz-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);
+  color:#f97316;border-radius:50px;
+  padding:5px 14px;font-size:12px;font-weight:600;letter-spacing:0.4px;
+  margin-top:8px;
+}
+.timer{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:10px 20px;
+  font-weight:700;font-size:15px;color:var(--accent);
+  display:flex;align-items:center;gap:8px;
+}
+.timer-icon{font-size:18px;}
+
+.progress-bar{background:#1e293b;border-radius:100px;height:6px;margin-bottom:28px;overflow:hidden;}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:100px;transition:width 0.4s ease;width:0%;
+}
+
+.question-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:24px;margin-bottom:16px;transition:0.2s;
+}
+.question-box:hover{border-color:#334155;}
+.q-number{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;}
+.q-text{font-size:16px;font-weight:500;margin-bottom:16px;line-height:1.5;}
+
+/* color swatch visual hint */
+.color-swatch-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.swatch{width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);}
+.swatch-label{font-size:10px;color:var(--muted);margin-top:3px;text-align:center;}
+.swatch-wrap{display:flex;flex-direction:column;align-items:center;}
+
+/* visual hint box */
+.q-visual{
+  background:#0a0f1e;border:1px solid #1e293b;
+  border-radius:10px;padding:14px 18px;margin-bottom:14px;
+  font-size:13px;color:#94a3b8;line-height:1.6;
+  display:flex;align-items:center;gap:10px;
+}
+.q-visual-icon{font-size:22px;flex-shrink:0;}
+
+.option{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 16px;margin:6px 0;
+  border-radius:10px;background:#1e293b;border:1px solid transparent;
+  cursor:pointer;transition:0.2s;user-select:none;
+}
+.option:hover{background:#293548;border-color:#334155;}
+.option.selected{background:rgba(255,204,0,0.1);border-color:var(--accent);}
+.option input[type=radio]{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;}
+.option-text{font-size:14px;line-height:1.4;}
+
+.actions{text-align:center;margin-top:32px;}
+.submit-btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#000;border:none;border-radius:50px;
+  padding:14px 40px;font-weight:700;font-size:16px;
+  cursor:pointer;transition:0.2s;
+  font-family:'DM Sans',sans-serif;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,204,0,0.3);}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+.result-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:32px;margin-top:32px;
+  animation:slideUp 0.4s ease;
+}
+.score-display{
+  text-align:center;margin-bottom:28px;padding:24px;
+  background:linear-gradient(135deg,rgba(255,204,0,0.08),rgba(249,115,22,0.08));
+  border-radius:14px;border:1px solid rgba(255,204,0,0.2);
+}
+.score-big{
+  font-family:'Playfair Display',serif;font-size:64px;font-weight:900;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;
+}
+.score-label{font-size:14px;color:var(--muted);margin-top:6px;}
+.answers-grid{display:flex;flex-direction:column;gap:8px;}
+.ans-row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 16px;border-radius:10px;
+  background:#1e293b;font-size:14px;
+}
+.ans-row.correct{border-left:3px solid var(--green);}
+.ans-row.wrong{border-left:3px solid var(--red);}
+.ans-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.ans-text{line-height:1.4;}
+.ans-text .correction{color:#fbbf24;font-size:12px;margin-top:2px;}
+.cert-btn{
+  background:linear-gradient(135deg,var(--purple),#6d28d9);
+  color:white;border:none;border-radius:50px;
+  padding:14px 40px;font-weight:700;font-size:16px;
+  cursor:pointer;transition:0.2s;margin-top:24px;
+  font-family:'DM Sans',sans-serif;
+  display:inline-flex;align-items:center;gap:8px;
+  width:100%;justify-content:center;
+}
+.cert-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(124,58,237,0.4);}
+
+.cert-modal{
+  position:fixed;inset:0;
+  background:rgba(2,6,23,0.92);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;padding:20px;
+  opacity:0;pointer-events:none;transition:0.3s;
+}
+.cert-modal.show{opacity:1;pointer-events:all;}
+.cert-wrapper{max-width:900px;width:100%;animation:slideUp 0.4s ease;}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
+.cert-actions button{
+  padding:12px 28px;border-radius:50px;
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;
+  cursor:pointer;border:none;transition:0.2s;
+}
+.btn-download{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;}
+.btn-close{background:var(--card);color:var(--text);border:1px solid var(--border);}
+.btn-download:hover{box-shadow:0 8px 20px rgba(255,204,0,0.3);}
+.btn-close:hover{background:#1e293b;}
+
+/* Certificate */
+.certificate{width:100%;background:#fff;border-radius:16px;overflow:hidden;position:relative;font-family:'DM Sans',sans-serif;aspect-ratio:1.414/1;display:flex;flex-direction:column;}
+.cert-top-bar{height:14px;background:linear-gradient(90deg,#7c3aed,#f97316,#ffcc00);}
+.cert-body{flex:1;display:flex;flex-direction:column;padding:32px 48px 24px;position:relative;background:#fff;}
+.cert-body::before{content:'';position:absolute;width:320px;height:320px;border-radius:50%;border:40px solid rgba(124,58,237,0.05);top:-80px;right:-80px;pointer-events:none;}
+.cert-body::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;border:30px solid rgba(255,204,0,0.07);bottom:-50px;left:-40px;pointer-events:none;}
+.cert-logo-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.cert-logo{display:flex;align-items:center;gap:10px;}
+.cert-logo-mark{width:44px;height:44px;background:linear-gradient(135deg,#7c3aed,#f97316);border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:20px;font-family:'Playfair Display',serif;flex-shrink:0;}
+.cert-logo-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1e1b4b;line-height:1;}
+.cert-logo-name span{color:#7c3aed;}
+.cert-logo-tagline{font-size:10px;color:#94a3b8;margin-top:2px;letter-spacing:0.5px;}
+.cert-badge{background:linear-gradient(135deg,#fef9c3,#fde68a);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:26px;border:3px solid #fbbf24;}
+.cert-divider{height:2px;background:linear-gradient(90deg,#7c3aed22,#7c3aed,#7c3aed22);margin-bottom:16px;border-radius:100px;}
+.cert-title-row{text-align:center;margin-bottom:6px;}
+.cert-title-word{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:900;color:#1e1b4b;letter-spacing:8px;text-transform:uppercase;display:block;}
+.cert-subtitle{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:12px;}
+.cert-presented{font-size:13px;color:#64748b;text-align:center;margin-bottom:4px;}
+.cert-name{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:#7c3aed;text-align:center;position:relative;display:inline-block;width:100%;}
+.cert-name::after{content:'';display:block;width:60%;margin:4px auto 0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);}
+.cert-course-row{text-align:center;margin-top:10px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-radius:10px;padding:10px 20px;border:1px solid #ddd6fe;display:inline-block;margin-left:auto;margin-right:auto;max-width:80%;}
+.cert-for{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.8px;}
+.cert-course{font-size:clamp(14px,2.5vw,18px);font-weight:700;color:#1e1b4b;font-family:'Playfair Display',serif;}
+.cert-footer{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto;padding-top:12px;}
+.cert-sig{text-align:center;}
+.cert-sig-line{width:120px;height:2px;background:#cbd5e1;margin:0 auto 4px;}
+.cert-sig-name{font-size:11px;font-weight:700;color:#1e293b;}
+.cert-sig-role{font-size:10px;color:#94a3b8;letter-spacing:0.3px;}
+.cert-seal{width:70px;height:70px;border-radius:50%;border:3px solid #7c3aed;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#7c3aed;text-align:center;letter-spacing:0.5px;background:linear-gradient(135deg,#f5f3ff,#fff);position:relative;}
+.cert-seal::before{content:'';position:absolute;inset:4px;border-radius:50%;border:1px dashed #c4b5fd;}
+.cert-seal-icon{font-size:22px;margin-bottom:2px;}
+.cert-date-area{font-size:10px;color:#94a3b8;text-align:right;}
+.cert-date-label{text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;}
+.cert-date-val{font-weight:600;color:#64748b;font-size:11px;}
+.cert-bottom-bar{height:8px;background:linear-gradient(90deg,#7c3aed,#f97316,#ffcc00,#f97316,#7c3aed);}
+
+@media(max-width:600px){
+  .quiz-header{flex-direction:column;align-items:flex-start;}
+  .cert-body{padding:20px 24px 16px;}
+  .cert-title-word{letter-spacing:4px;}
+  .name-card{padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Name Input Overlay -->
+<div class="name-overlay" id="name-overlay">
+  <div class="name-card">
+    <div class="ic-logo">
+      <div class="logo-mark">I</div>
+      <div><div class="logo-text">Intern<span>Connect</span></div></div>
+    </div>
+    <h2>Welcome to the Quiz!</h2>
+    <p>Enter your details below. These will appear on your certificate upon completion.</p>
+    <div class="input-group">
+      <label>Your Full Name</label>
+      <input type="text" id="user-name" placeholder="e.g. Priya Mehta" autocomplete="name">
+    </div>
+    <div class="input-group">
+      <label>Course Name</label>
+      <input type="text" id="user-course" value="Graphic Design Fundamentals">
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Start Quiz →</button>
+  </div>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo-mark">I</div>
+  <div class="logo-text">Intern<span>Connect</span></div>
+</div>
+
+<!-- Quiz -->
+<div class="container">
+  <div class="quiz-header">
+    <div>
+      <div class="quiz-title">Graphic Design Quiz</div>
+      <div class="quiz-badge">🎨 Visual Design · 15 Questions · 30 Min</div>
+    </div>
+    <div class="timer">
+      <span class="timer-icon">⏱</span>
+      <span id="timer">30:00</span>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <form id="quiz-form"></form>
+  <div class="actions">
+    <button class="submit-btn" id="submit-btn" onclick="submitQuiz()">Submit Quiz ✓</button>
+  </div>
+  <div id="result-area"></div>
+</div>
+
+<!-- Certificate Modal -->
+<div class="cert-modal" id="cert-modal">
+  <div class="cert-wrapper">
+    <div id="certificate-preview"></div>
+    <div class="cert-actions">
+      <button class="btn-download" onclick="downloadCert()">⬇ Download Certificate</button>
+      <button class="btn-close" onclick="closeCertModal()">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+
+const questions = [
+  {
+    q: "What are the three primary colors in the RGB color model?",
+    options: ["Red, Green, Blue", "Red, Yellow, Blue", "Cyan, Magenta, Yellow", "Orange, Green, Purple"],
+    answer: 0,
+    visual: { icon: "🔴🟢🔵", text: "RGB is used for digital screens and light-based color mixing." }
+  },
+  {
+    q: "Which color model is used for print design?",
+    options: ["CMYK", "RGB", "HSB", "LAB"],
+    answer: 0,
+    visual: { icon: "🖨️", text: "Print uses ink, not light — so a different color model is required." }
+  },
+  {
+    q: "What does DPI stand for in graphic design?",
+    options: ["Dots Per Inch", "Design Per Image", "Digital Print Index", "Display Pixel Intensity"],
+    answer: 0,
+    visual: null
+  },
+  {
+    q: "Which file format supports a transparent background?",
+    options: ["PNG", "JPG", "BMP", "TIFF"],
+    answer: 0,
+    visual: { icon: "🖼️", text: "Transparency (alpha channel) is essential for logos placed on various backgrounds." }
+  },
+  {
+    q: "What is 'kerning' in typography?",
+    options: [
+      "Adjusting spacing between individual letter pairs",
+      "Changing the font weight",
+      "Setting line height between rows",
+      "Aligning text to a grid"
+    ],
+    answer: 0,
+    visual: null
+  },
+  {
+    q: "Which design principle refers to the visual weight and distribution of elements on a page?",
+    options: ["Balance", "Contrast", "Repetition", "Proximity"],
+    answer: 0,
+    visual: { icon: "⚖️", text: "Good balance makes a design feel stable and harmonious." }
+  },
+  {
+    q: "What is a vector graphic?",
+    options: [
+      "An image made of mathematical paths that scale without losing quality",
+      "An image made of pixels",
+      "A high-resolution photograph",
+      "A GIF animation file"
+    ],
+    answer: 0,
+    visual: null
+  },
+  {
+    q: "Which software is most commonly used for vector graphic design?",
+    options: ["Adobe Illustrator", "Adobe Photoshop", "Canva", "Microsoft Paint"],
+    answer: 0,
+    visual: { icon: "🛠️", text: "Used by professionals for logos, icons, and illustrations." }
+  },
+  {
+    q: "What is the 'Rule of Thirds' in design and photography?",
+    options: [
+      "Dividing the canvas into a 3×3 grid and placing subjects at intersections",
+      "Using only three colors in a design",
+      "Limiting a design to three fonts",
+      "Keeping three equal margins on every side"
+    ],
+    answer: 0,
+    visual: { icon: "🔲", text: "A classic compositional guideline borrowed from photography." }
+  },
+  {
+    q: "What does 'leading' mean in typography?",
+    options: [
+      "The vertical spacing between lines of text",
+      "The thickness of a font stroke",
+      "The space between individual characters",
+      "The overall font size"
+    ],
+    answer: 0,
+    visual: null
+  },
+  {
+    q: "Which color scheme uses colors directly opposite each other on the color wheel?",
+    options: ["Complementary", "Analogous", "Triadic", "Monochromatic"],
+    answer: 0,
+    visual: { icon: "🎡", text: "e.g. Blue & Orange, Red & Green — creates strong contrast." }
+  },
+  {
+    q: "What is the purpose of 'white space' (negative space) in design?",
+    options: [
+      "To improve readability and reduce visual clutter",
+      "To fill empty areas with color",
+      "To add decorative borders",
+      "To separate sections with a line"
+    ],
+    answer: 0,
+    visual: null
+  },
+  {
+    q: "What is a 'mood board' used for in graphic design?",
+    options: [
+      "Gathering visual inspiration and setting the tone for a project",
+      "Measuring the resolution of images",
+      "Tracking client feedback",
+      "Exporting final design files"
+    ],
+    answer: 0,
+    visual: { icon: "📌", text: "Mood boards align visual direction between designer and client before execution." }
+  },
+  {
+    q: "Which of the following is a raster-based image editing software?",
+    options: ["Adobe Photoshop", "Adobe Illustrator", "CorelDRAW", "Inkscape"],
+    answer: 0,
+    visual: null
+  },
+  {
+    q: "What does 'brand identity' include in graphic design?",
+    options: [
+      "Logo, color palette, typography, and visual guidelines",
+      "Only the company logo",
+      "Social media follower count",
+      "Website loading speed"
+    ],
+    answer: 0,
+    visual: { icon: "🏷️", text: "A strong brand identity ensures visual consistency across all touchpoints." }
+  }
+];
+
+let userName = '', userCourse = '', userAnswers = new Array(questions.length).fill(null);
+let totalTime = 30 * 60, timerInterval;
+
+function startQuiz() {
+  userName = document.getElementById('user-name').value.trim();
+  userCourse = document.getElementById('user-course').value.trim();
+  if (!userName) { document.getElementById('user-name').focus(); return; }
+  if (!userCourse) { document.getElementById('user-course').focus(); return; }
+  document.getElementById('name-overlay').style.display = 'none';
+  renderQuiz();
+  startTimer();
+}
+
+function renderQuiz() {
+  const form = document.getElementById('quiz-form');
+  questions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question-box';
+    div.id = `q-box-${i}`;
+
+    const visualBlock = q.visual
+      ? `<div class="q-visual"><span class="q-visual-icon">${q.visual.icon}</span><span>${q.visual.text}</span></div>`
+      : '';
+
+    div.innerHTML = `
+      <div class="q-number">Question ${i+1} of ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      ${visualBlock}
+      ${q.options.map((opt, j) => `
+        <label class="option" id="opt-${i}-${j}" onclick="selectOption(${i},${j})">
+          <input type="radio" name="q${i}" value="${j}">
+          <span class="option-text">${opt}</span>
+        </label>`).join('')}`;
+    form.appendChild(div);
+  });
+}
+
+function selectOption(qIndex, optIndex) {
+  userAnswers[qIndex] = optIndex;
+  for (let j = 0; j < questions[qIndex].options.length; j++) {
+    document.getElementById(`opt-${qIndex}-${j}`).classList.toggle('selected', j === optIndex);
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = userAnswers.filter(a => a !== null).length;
+  document.getElementById('progress-fill').style.width = (answered / questions.length * 100) + '%';
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    totalTime--;
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById('timer').textContent = `${min}:${sec.toString().padStart(2, '0')}`;
+    if (totalTime <= 300) document.getElementById('timer').style.color = '#ef4444';
+    if (totalTime <= 0) { clearInterval(timerInterval); submitQuiz(); }
+  }, 1000);
+}
+
+function submitQuiz() {
+  clearInterval(timerInterval);
+  document.getElementById('submit-btn').disabled = true;
+  calculateResult();
+}
+
+function calculateResult() {
+  let score = 0;
+  let answersHTML = '';
+  questions.forEach((q, i) => {
+    const correct = userAnswers[i] === q.answer;
+    if (correct) score++;
+    answersHTML += `<div class="ans-row ${correct ? 'correct' : 'wrong'}">
+      <div class="ans-icon">${correct ? '✅' : '❌'}</div>
+      <div class="ans-text">
+        <strong>Q${i+1}:</strong> ${q.q}
+        ${!correct ? `<div class="correction">✔ Correct: ${q.options[q.answer]}</div>` : ''}
+      </div>
+    </div>`;
+  });
+  const pct = (score / questions.length * 100).toFixed(1);
+  document.getElementById('result-area').innerHTML = `
+    <div class="result-card">
+      <div class="score-display">
+        <div class="score-big">${pct}%</div>
+        <div class="score-label">${score} out of ${questions.length} correct · ${score >= 12 ? '🎉 Excellent work!' : score >= 9 ? '👍 Good effort!' : '📚 Keep practicing!'}</div>
+      </div>
+      <div class="answers-grid">${answersHTML}</div>
+      <button class="cert-btn" onclick="showCertificate()">🎓 Generate Certificate</button>
+    </div>`;
+  document.getElementById('result-area').scrollIntoView({behavior:'smooth'});
+}
+
+function showCertificate() {
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('certificate-preview').innerHTML = `
+  <div class="certificate" id="the-certificate">
+    <div class="cert-top-bar"></div>
+    <div class="cert-body">
+      <div class="cert-logo-row">
+        <div class="cert-logo">
+          <div class="cert-logo-mark">I</div>
+          <div>
+            <div class="cert-logo-name">Intern<span>Connect</span></div>
+            <div class="cert-logo-tagline">PROFESSIONAL LEARNING PLATFORM</div>
+          </div>
+        </div>
+        <div class="cert-badge">🏆</div>
+      </div>
+      <div class="cert-divider"></div>
+      <div class="cert-title-row">
+        <span class="cert-subtitle">This is to certify that</span>
+        <span class="cert-title-word">Certificate</span>
+        <span class="cert-subtitle" style="margin-top:2px;">of Completion</span>
+      </div>
+      <div class="cert-presented">is proudly presented to</div>
+      <div class="cert-name">${userName}</div>
+      <div style="text-align:center;margin-top:10px;">
+        <div class="cert-course-row">
+          <div class="cert-for">For successfully completing</div>
+          <div class="cert-course">${userCourse}</div>
+        </div>
+      </div>
+      <div class="cert-footer">
+        <div class="cert-sig">
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-name">InternConnect Team</div>
+          <div class="cert-sig-role">Course Director</div>
+        </div>
+        <div class="cert-seal">
+          <div class="cert-seal-icon">✦</div>
+          <div>VERIFIED</div><div>CERT</div>
+        </div>
+        <div class="cert-date-area">
+          <div class="cert-date-label">Date of Issue</div>
+          <div class="cert-date-val">${dateStr}</div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-bottom-bar"></div>
+  </div>`;
+  document.getElementById('cert-modal').classList.add('show');
+}
+
+function closeCertModal() {
+  document.getElementById('cert-modal').classList.remove('show');
+}
+
+async function downloadCert() {
+  const btn = document.querySelector('.btn-download');
+  btn.textContent = '⏳ Generating...';
+  btn.disabled = true;
+  const cert = document.getElementById('the-certificate');
+  const canvas = await html2canvas(cert, {scale:3,useCORS:true,backgroundColor:'#ffffff',logging:false});
+  const imgData = canvas.toDataURL('image/png');
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF('l','px',[canvas.width/3,canvas.height/3]);
+  pdf.addImage(imgData,'PNG',0,0,canvas.width/3,canvas.height/3);
+  pdf.save(`${userName.replace(/ /g,'_')}_InternConnect_Certificate.pdf`);
+  btn.textContent = '⬇ Download Certificate';
+  btn.disabled = false;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('name-overlay').style.display !== 'none') startQuiz();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Details</title>
+<link rel="stylesheet" href="frontend.css">
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<div class="job-container">
+
+  <h1 style="color:gold">Frontend Developer</h1>
+  <p class="company">TechNova Pvt Ltd</p>
+
+  <p class="wfh">💼 Work from Home</p>
+
+  <div class="info-row">
+    <span>Start Date: Immediately</span>
+    <span>CTC(Annual): ₹ 4,00,000-5,00,000</span>
+    <span>Experience: 0 year</span>
+    <span>Apply By: 23 May</span>
+  </div>
+
+  <div class="tags">
+    <span class="green">Posted just now</span>
+    <span class="purple">Fresher Job</span>
+  </div>
+
+  <h2>About the job</h2>
+  <p class="sub">Key Responsibilities:</p>
+
+  <ul>
+    <li>Develop responsive UI using HTML, CSS, JavaScript</li>
+    <li>Convert Figma designs into pixel-perfect UI</li>
+    <li>Optimize website performance</li>
+    <li>Collaborate with backend team</li>
+  </ul>
+
+  <h2>Skills Required</h2>
+  <div class="skills">
+    <span>HTML</span>
+    <span>CSS</span>
+    <span>JS</span>
+    <span>React</span>
+    <span>Responsive Design</span>
+  </div>
+
+  <h2>Perks</h2>
+  <div class="perks">
+    <span>5 Days a week</span>
+    <span>Health Insurance</span>
+  </div>
+
+  <p class="opening">Number of Opening: 3</p>
+
+  <button class="apply-btn" onclick="applyJob()" style="background-color:gold">Apply Now</button>
+<style>
+  .apply-btn{
+    background-color: gold;
+  }
+</style>
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-box">
+    <h2>✅ Application Successful</h2>
+    <button onclick="closePopup()">OK</button>
+  </div>
+</div>
+
+<script src="frontend.js"></script>
+</body>
+</html>

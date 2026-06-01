@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend Mastery – Gold Certification</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a0a0a; --card:#141414; --border:#2a2416;
+  --gold:#d4af37; --gold-light:#f1d592; --text:#e0e0e0;
+  --muted:#888; --green:#28a745; --red:#dc3545;
+}
+body{
+  font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh;
+  background-image: radial-gradient(circle at 50% -20%, #2a2416 0%, transparent 70%);
+}
+
+/* Header */
+.header{ background:rgba(10,10,10,0.9); border-bottom:1px solid var(--border); padding:16px 30px; display:flex; align-items:center; position:sticky; top:0; z-index:100; backdrop-filter:blur(10px); }
+.logo-mark{ width:40px; height:40px; background:linear-gradient(135deg, var(--gold), #f9e5a1); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; color:#000; font-size:20px; }
+.logo-text{ margin-left:12px; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+.logo-text span{ color:var(--gold); }
+
+/* Overlay */
+.name-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.95); display:flex; align-items:center; justify-content:center; z-index:999; }
+.name-card{ background:var(--card); border:2px solid var(--border); border-radius:24px; padding:50px; max-width:450px; width:100%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.5); }
+.name-card h2{ font-family:'Playfair Display', serif; color:var(--gold); font-size:32px; margin-bottom:10px; }
+.input-group{ margin-bottom:20px; text-align:left; }
+.input-group label{ display:block; font-size:11px; color:var(--gold); margin-bottom:8px; font-family:'JetBrains Mono'; text-transform:uppercase; letter-spacing:1px; }
+.input-group input{ width:100%; background:#1a1a1a; border:1px solid var(--border); border-radius:12px; padding:15px; color:#fff; outline:none; transition:0.3s; }
+.input-group input:focus{ border-color:var(--gold); box-shadow:0 0 10px rgba(212,175,55,0.2); }
+.start-btn{ width:100%; background:linear-gradient(to right, var(--gold), var(--gold-light)); color:#000; border:none; border-radius:12px; padding:18px; font-weight:800; cursor:pointer; font-size:16px; text-transform:uppercase; transition:0.3s; }
+.start-btn:hover{ transform:scale(1.02); filter:brightness(1.1); }
+
+/* Quiz Styles */
+.container{ max-width:850px; margin:auto; padding:50px 20px; }
+.question-box{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:30px; margin-bottom:20px; position:relative; overflow:hidden; }
+.question-box::after{ content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--gold); }
+.option{ display:flex; align-items:center; gap:15px; padding:15px; margin:10px 0; border-radius:10px; background:#1a1a1a; cursor:pointer; border:1px solid transparent; transition:0.2s; }
+.option:hover{ background:#222; border-color:#444; }
+.option.selected{ border-color:var(--gold); background:rgba(212,175,55,0.05); }
+
+.progress-bar{ height:6px; background:#222; border-radius:10px; margin-bottom:40px; overflow:hidden; }
+.progress-fill{ height:100%; background:linear-gradient(to right, #8e6d13, var(--gold)); width:0%; transition:0.5s; }
+
+/* Result */
+.result-card{ background:var(--card); border:2px solid var(--gold); border-radius:20px; padding:40px; text-align:center; }
+.score-big{ font-size:72px; font-weight:800; color:var(--gold); font-family:'Playfair Display', serif; }
+.cert-btn{ width:100%; background:linear-gradient(to right, #b8860b, #ffd700); color:#000; border:none; padding:20px; border-radius:50px; font-weight:800; cursor:pointer; margin-top:25px; font-size:18px; letter-spacing:1px; }
+
+/* Gold Certificate Modal */
+.cert-modal{ position:fixed; inset:0; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:10000; padding:20px; }
+.cert-modal.show{ display:flex; }
+.certificate{ width:800px; height:560px; background:#fff; padding:30px; color:#1a1a1a; position:relative; border:20px solid #1a1a1a; box-shadow: 0 0 40px rgba(212,175,55,0.4); }
+.cert-border-inner{ border:2px solid var(--gold); height:100%; width:100%; padding:40px; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; background: radial-gradient(circle, #fff 60%, #fcf9f0 100%);}
+.cert-stamp{ position:absolute; bottom:40px; right:40px; width:100px; opacity:0.8; }
+</style>
+</head>
+<body>
+
+<div class="name-overlay" id="name-overlay">
+  <div class="name-card">
+    <h2>Gold <span>Edition</span></h2>
+    <p style="color:var(--muted); margin-bottom:30px;">Backend Engineering Assessment</p>
+    <div class="input-group">
+      <label>Engineer Name</label>
+      <input type="text" id="user-name" placeholder="Enter Full Name">
+    </div>
+    <div class="input-group">
+      <label>Specialization</label>
+      <input type="text" id="user-course" value="Backend Systems & Architecture">
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Begin Assessment →</button>
+  </div>
+</div>
+
+<div class="header">
+  <div class="logo-mark">B</div>
+  <div class="logo-text">Backend<span>Gold</span></div>
+</div>
+
+<div class="container">
+  <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-family:'JetBrains Mono'; font-size:12px;">
+    <div id="answered-count">0/40 QUESTIONS ANSWERED</div>
+    <div id="timer" style="color:var(--gold);">50:00</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <form id="quiz-form"></form>
+  <button class="start-btn" id="submit-btn" style="display:none;" onclick="submitQuiz()">Submit Final Assessment</button>
+  <div id="result-area"></div>
+</div>
+
+<div class="cert-modal" id="cert-modal">
+  <div>
+    <div id="certificate-preview"></div>
+    <div style="display:flex; gap:15px; margin-top:20px; justify-content:center;">
+        <button class="start-btn" style="width:220px" onclick="downloadCert()">Download Gold PDF</button>
+        <button class="start-btn" style="width:120px; background:#333; color:white;" onclick="closeCertModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+const questions = [
+    { q: "What does API stand for?", options: ["Application Programming Interface", "Applied Protocol Integration", "Advanced Program Install", "None"], answer: 0 },
+    { q: "Which HTTP method is used to CREATE data?", options: ["GET", "POST", "PUT", "DELETE"], answer: 1 },
+    { q: "What is the default port for Node.js?", options: ["80", "443", "3000", "Depends on code"], answer: 3 },
+    { q: "Which database is NoSQL?", options: ["MySQL", "PostgreSQL", "MongoDB", "Oracle"], answer: 2 },
+    { q: "What does SQL stand for?", options: ["Structured Query Language", "Simple Queue List", "Standard Query Logic", "None"], answer: 0 },
+    { q: "Which status code means 'Not Found'?", options: ["200", "404", "500", "403"], answer: 1 },
+    { q: "What is Middleware in Express?", options: ["Database", "Functions during Request-Response cycle", "Frontend tool", "Operating System"], answer: 1 },
+    { q: "Which of these is used for Password Hashing?", options: ["JSON", "Bcrypt", "Nodemon", "Cors"], answer: 1 },
+    { q: "What is JWT?", options: ["Java Web Tool", "JSON Web Token", "Just Working Technology", "None"], answer: 1 },
+    { q: "Which command installs a package in Node?", options: ["npm install", "node get", "get-package", "npm start"], answer: 0 },
+    { q: "What is 'npm'?", options: ["Node Project Manager", "Node Package Manager", "New Process Mode", "None"], answer: 1 },
+    { q: "Which HTTP code means 'Internal Server Error'?", options: ["400", "401", "500", "503"], answer: 2 },
+    { q: "What is a 'Primary Key'?", options: ["Unique identifier for a record", "A password", "Database name", "Table name"], answer: 0 },
+    { q: "Which tool is used to test APIs?", options: ["VS Code", "Postman", "Chrome", "Photoshop"], answer: 1 },
+    { q: "What is 'CORS'?", options: ["Cross-Origin Resource Sharing", "Core Object Resource", "Code Only Real System", "None"], answer: 0 },
+    { q: "What is the purpose of 'Nodemon'?", options: ["Database", "Auto-restarts server on changes", "CSS styler", "Security tool"], answer: 1 },
+    { q: "Which of these is a Javascript Runtime?", options: ["Python", "Node.js", "Java", "PHP"], answer: 1 },
+    { q: "What is 'Schema' in Mongoose?", options: ["Database color", "Document structure definition", "Server port", "API route"], answer: 1 },
+    { q: "Which HTTP method is used to UPDATE data?", options: ["GET", "PUT", "POST", "HEAD"], answer: 1 },
+    { q: "What does 'Environment Variable' usually store?", options: ["User images", "Sensitive keys (DB URLs)", "HTML code", "CSS colors"], answer: 1 },
+    { q: "What is an 'End-point'?", options: ["Server cable", "URL path of an API", "Computer screen", "Database row"], answer: 1 },
+    { q: "Which is a 'Foreign Key'?", options: ["Link between two tables", "A key from another country", "Encrypted key", "None"], answer: 0 },
+    { q: "What is 'Load Balancing'?", options: ["Lifting heavy servers", "Distributing traffic across servers", "Charging battery", "Writing fast code"], answer: 1 },
+    { q: "What is 'Authentication'?", options: ["Verifying who a user is", "Verifying what a user can do", "Changing password", "Deleting account"], answer: 0 },
+    { q: "What is 'Authorization'?", options: ["Verifying who a user is", "Verifying what a user can do", "Signup process", "Server reboot"], answer: 1 },
+    { q: "Which language is used for MongoDB queries?", options: ["SQL", "JSON/Javascript", "C++", "HTML"], answer: 1 },
+    { q: "What does REST stand for?", options: ["Representational State Transfer", "Real State Technology", "Reset Every Single Time", "None"], answer: 0 },
+    { q: "What is a 'Model' in MVC?", options: ["Fashion designer", "Data Logic", "UI Layout", "Route handler"], answer: 1 },
+    { q: "What is a 'Controller' in MVC?", options: ["Game controller", "Handles Request logic", "Stores data", "Styles the page"], answer: 1 },
+    { q: "What is 'Rate Limiting'?", options: ["Limiting user height", "Limiting number of API requests", "Limiting internet speed", "None"], answer: 1 },
+    { q: "What is 'Indexing' in Databases?", options: ["Measuring table height", "Optimizing search speed", "Deleting data", "Renaming columns"], answer: 1 },
+    { q: "What is 'Server-side Rendering'?", options: ["Rendering UI on server", "Rendering UI in browser", "Painting servers", "None"], answer: 0 },
+    { q: "Which file contains project dependencies?", options: ["index.js", "package.json", "styles.css", "main.html"], answer: 1 },
+    { q: "What is 'Microservices'?", options: ["Small computers", "Architecure of small independent services", "Tiny databases", "None"], answer: 1 },
+    { q: "What is 'ORM'?", options: ["Object-Relational Mapping", "Only Real Money", "Object Route Mode", "None"], answer: 0 },
+    { q: "Which is an example of an ORM?", options: ["Express", "Sequelize", "React", "HTML"], answer: 1 },
+    { q: "What is 'Asynchronous' programming?", options: ["One task at a time", "Multiple tasks without blocking", "Deleting code", "None"], answer: 1 },
+    { q: "What is a 'Transaction' in DB?", options: ["Paying money", "Group of operations as single unit", "Logging in", "None"], answer: 1 },
+    { q: "What is 'Web Socket' used for?", options: ["Real-time bi-directional communication", "Static pages", "Sending emails", "None"], answer: 0 },
+    { q: "What is 'Docker' used for?", options: ["Designing logos", "Containerization of apps", "Writing SQL", "None"], answer: 1 }
+];
+
+let userName = '', userCourse = '', userAnswers = new Array(questions.length).fill(null), totalTime = 3000;
+
+function startQuiz() {
+    userName = document.getElementById('user-name').value;
+    userCourse = document.getElementById('user-course').value;
+    if(!userName) return alert("Please enter your name to proceed.");
+    document.getElementById('name-overlay').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'block';
+    renderQuiz();
+    setInterval(updateTimer, 1000);
+}
+
+function renderQuiz() {
+    const form = document.getElementById('quiz-form');
+    questions.forEach((q, i) => {
+        const div = document.createElement('div');
+        div.className = 'question-box';
+        div.innerHTML = `<p style="margin-bottom:15px; font-weight:700; color:var(--gold-light)">${i+1}. ${q.q}</p>` +
+        q.options.map((opt, j) => `<div class="option" id="opt-${i}-${j}" onclick="select(${i},${j})">${opt}</div>`).join('');
+        form.appendChild(div);
+    });
+}
+
+function select(qi, oi) {
+    userAnswers[qi] = oi;
+    document.querySelectorAll(`[id^='opt-${qi}-']`).forEach(el => el.classList.remove('selected'));
+    document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+    const answered = userAnswers.filter(a => a !== null).length;
+    document.getElementById('answered-count').innerText = `${answered}/40 QUESTIONS ANSWERED`;
+    document.getElementById('progress-fill').style.width = (answered/40*100)+'%';
+}
+
+function updateTimer() {
+    if(totalTime <= 0) return;
+    totalTime--;
+    let m = Math.floor(totalTime/60), s = totalTime%60;
+    document.getElementById('timer').innerText = `${m}:${s<10?'0':''}${s}`;
+}
+
+function submitQuiz() {
+    let score = 0;
+    questions.forEach((q, i) => { if(userAnswers[i] === q.answer) score++; });
+    let percent = (score/40)*100;
+    
+    let html = `<div class="result-card"><div class="score-big">${percent}%</div><p style="color:var(--muted)">Assessment Score: ${score}/40</p>`;
+    
+    if(percent >= 75) {
+        html += `<p style="margin-top:15px; color:var(--gold)">Outstanding performance. You have earned the Gold Certification.</p>
+                 <button class="cert-btn" onclick="showCert(${score})">Claim Gold Certificate</button>`;
+    } else {
+        html += `<p style="color:var(--red); margin-top:20px;">You need 75% to earn the Gold badge. Try again!</p>`;
+    }
+    
+    html += '</div>';
+    document.getElementById('result-area').innerHTML = html;
+    window.scrollTo({top: document.getElementById('result-area').offsetTop, behavior:'smooth'});
+}
+
+function showCert(s) {
+    document.getElementById('certificate-preview').innerHTML = `
+        <div class="certificate" id="cert-pdf">
+            <div class="cert-border-inner">
+                <h4 style="color:var(--gold); letter-spacing:3px">OFFICIAL CERTIFICATION</h4>
+                <h1 style="font-family:'Playfair Display', serif; font-size:48px; margin:10px 0;">Backend Architect</h1>
+                <p style="font-size:16px; font-style:italic">This is to certify that</p>
+                <h2 style="font-size:40px; margin:15px 0; border-bottom:1px solid #ddd; padding:0 30px;">${userName}</h2>
+                <p>has demonstrated exceptional mastery in</p>
+                <h3 style="font-weight:800; font-size:20px; color:#b8860b">${userCourse}</h3>
+                <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px; width:100%; display:flex; justify-content:space-around; font-size:12px">
+                    <div><b>Verification ID:</b> #GOLD-${Math.floor(Math.random()*99999)}</div>
+                    <div><b>Grade:</b> Excellent (${(s/40)*100}%)</div>
+                </div>
+                <p style="margin-top:20px; font-size:10px">Issued by InternConnect Gold Engine on ${new Date().toLocaleDateString()}</p>
+                <img src="https://cdn-icons-png.flaticon.com/512/610/610333.png" class="cert-stamp">
+            </div>
+        </div>`;
+    document.getElementById('cert-modal').classList.add('show');
+}
+
+function closeCertModal() { document.getElementById('cert-modal').classList.remove('show'); }
+
+async function downloadCert() {
+    const certElement = document.getElementById('cert-pdf');
+    const canvas = await html2canvas(certElement, { scale: 3 });
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('l', 'mm', 'a4');
+    pdf.addImage(imgData, 'PNG', 0, 0, 297, 210);
+    pdf.save(`GoldCert_Backend_${userName}.pdf`);
+}
+</script>
+</body>
+</html>

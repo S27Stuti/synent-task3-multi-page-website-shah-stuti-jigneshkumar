@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Company Profile Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F0C040;
+    --gold-dim: #A07810;
+    --gold-muted: rgba(212,160,23,0.15);
+    --gold-border: rgba(212,160,23,0.35);
+    --gold-border-strong: rgba(212,160,23,0.65);
+    --black: #080808;
+    --black2: #101010;
+    --black3: #181818;
+    --black4: #222222;
+    --black5: #2c2c2c;
+    --text: #f0ede8;
+    --text-muted: #888880;
+    --text-dim: #555550;
+    --danger: #c0392b;
+    --success: #27ae60;
+    --radius: 6px;
+    --radius-lg: 10px;
+    --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--black);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--black2);
+    border-bottom: 1px solid var(--gold-border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    height: 58px;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topbar-logo .dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+  .topbar-divider { flex: 1; }
+  .topbar-tag {
+    font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    flex: 1;
+    min-height: calc(100vh - 58px);
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    background: var(--black2);
+    border-right: 1px solid var(--gold-border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: calc(100vh - 58px);
+  }
+
+  .panel-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--gold-border);
+    background: var(--black);
+    flex-shrink: 0;
+  }
+  .panel-tab {
+    flex: 1;
+    padding: 12px 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .panel-tab:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .panel-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); background: rgba(212,160,23,0.05); }
+
+  .tab-content { display: none; flex-direction: column; flex: 1; }
+  .tab-content.active { display: flex; }
+
+  /* ── FORM SECTION ── */
+  .form-scroll { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .form-scroll::-webkit-scrollbar { width: 4px; }
+  .form-scroll::-webkit-scrollbar-track { background: transparent; }
+  .form-scroll::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 2px; }
+
+  .form-section-title {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--gold-border);
+  }
+  .form-section-title::before {
+    content: ''; display: inline-block; width: 16px; height: 1px; background: var(--gold);
+  }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 11px; font-weight: 500; color: var(--gold-dim);
+    letter-spacing: 0.8px; text-transform: uppercase;
+  }
+  input, textarea, select {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13.5px;
+    color: var(--text);
+    background: var(--black3);
+    border: 1px solid var(--black5);
+    border-radius: var(--radius);
+    padding: 9px 13px;
+    outline: none;
+    transition: border var(--transition), background var(--transition);
+    width: 100%;
+  }
+  input::placeholder, textarea::placeholder { color: var(--text-dim); font-size: 13px; }
+  input:hover, textarea:hover, select:hover { border-color: var(--gold-border); }
+  input:focus, textarea:focus, select:focus { border-color: var(--gold); background: var(--black4); }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+  select { appearance: none; cursor: pointer; }
+  select option { background: var(--black3); }
+
+  .char-count { font-size: 10px; color: var(--text-dim); text-align: right; margin-top: 2px; }
+
+  /* ── FORM ACTIONS ── */
+  .form-actions {
+    padding: 16px 24px;
+    border-top: 1px solid var(--gold-border);
+    background: var(--black);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 9px 18px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: #000;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--black5);
+  }
+  .btn-ghost:hover { border-color: var(--gold-border); color: var(--text); }
+  .btn-sm {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+  .btn-danger-ghost {
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid rgba(192,57,43,0.3);
+  }
+  .btn-danger-ghost:hover { background: rgba(192,57,43,0.08); }
+
+  .save-flash {
+    font-size: 11.5px; color: var(--success);
+    display: none; align-items: center; gap: 5px; margin-left: auto;
+    animation: fadeIn 0.3s;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: translateX(0); } }
+
+  /* ── HISTORY LIST ── */
+  .history-scroll { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .history-scroll::-webkit-scrollbar { width: 4px; }
+  .history-scroll::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 2px; }
+
+  .history-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--gold-border);
+    flex-shrink: 0;
+  }
+  .history-header h2 { font-size: 13px; font-weight: 600; color: var(--gold); letter-spacing: 0.5px; }
+  .badge-count {
+    font-size: 11px; padding: 2px 10px;
+    background: var(--gold-muted); color: var(--gold-light);
+    border: 1px solid var(--gold-border); border-radius: 20px;
+  }
+
+  .history-card {
+    background: var(--black3);
+    border: 1px solid var(--black5);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
+    transition: border var(--transition), transform var(--transition);
+    cursor: default;
+    animation: slideIn 0.25s ease;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .history-card:hover { border-color: var(--gold-border); transform: translateY(-1px); }
+  .history-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .history-card-name { font-size: 14px; font-weight: 600; color: var(--gold-light); font-family: 'Cormorant Garamond', serif; }
+  .history-card-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .history-card-desc { font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.55; }
+  .history-card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .empty-state {
+    text-align: center; padding: 48px 20px; color: var(--text-muted);
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .empty-state-icon { font-size: 42px; opacity: 0.25; }
+  .empty-state p { font-size: 13px; line-height: 1.6; }
+
+  /* ── RIGHT PANEL — PREVIEW ── */
+  .right-panel {
+    background: var(--black);
+    overflow-y: auto;
+    max-height: calc(100vh - 58px);
+    display: flex;
+    flex-direction: column;
+  }
+  .right-panel::-webkit-scrollbar { width: 5px; }
+  .right-panel::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 2px; }
+
+  .preview-label {
+    padding: 12px 28px;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-muted); border-bottom: 1px solid var(--black4);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .preview-label .live-dot {
+    width: 6px; height: 6px; background: var(--gold);
+    border-radius: 50%; animation: pulse 2s infinite;
+  }
+
+  /* ── PROFILE CARD PREVIEW ── */
+  .profile-preview {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+  }
+
+  .profile-card {
+    background: var(--black2);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(212,160,23,0.07), 0 2px 40px rgba(0,0,0,0.6);
+    animation: cardReveal 0.5s ease;
+  }
+  @keyframes cardReveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  .pv-hero {
+    background: var(--black);
+    border-bottom: 2px solid var(--gold);
+    padding: 32px 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pv-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(212,160,23,0.07) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .pv-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    opacity: 0.4;
+  }
+
+  .pv-top-row {
+    display: flex; align-items: center; gap: 18px; margin-bottom: 16px;
+  }
+  .pv-logo-box {
+    width: 64px; height: 64px;
+    border-radius: 10px;
+    border: 1.5px solid var(--gold);
+    background: var(--black3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .pv-logo-box img {
+    width: 100%; height: 100%; object-fit: cover; display: none;
+  }
+  .pv-company-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 700;
+    color: #fff; line-height: 1.15;
+    letter-spacing: 0.5px;
+  }
+  .pv-tagline {
+    font-size: 13px; color: var(--gold-dim);
+    margin-top: 3px; font-style: italic; font-weight: 300;
+  }
+
+  .pv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pv-chip {
+    font-size: 11px; padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--gold-border);
+    color: var(--gold-light);
+    background: var(--gold-muted);
+    letter-spacing: 0.3px;
+  }
+
+  .pv-body { padding: 26px 32px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .pv-section { display: flex; flex-direction: column; gap: 10px; }
+  .pv-section.full { grid-column: 1 / -1; }
+
+  .pv-section-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold);
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--gold-border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pv-section-title::before { content: '◆'; font-size: 6px; }
+
+  .pv-about-text {
+    font-size: 13.5px; color: #bbb8b0;
+    line-height: 1.75; font-weight: 300;
+  }
+
+  .pv-info-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px;
+  }
+  .pv-info-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: var(--gold-muted);
+    border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+  }
+  .pv-info-label { font-size: 10px; color: var(--text-muted); margin-bottom: 1px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .pv-info-val { font-size: 13px; color: var(--text); font-weight: 400; }
+  .pv-info-val a { color: var(--gold-light); text-decoration: none; }
+  .pv-info-val a:hover { text-decoration: underline; }
+
+  .pv-services-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pv-service-tag {
+    font-size: 12px; padding: 5px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--gold-border);
+    color: var(--text);
+    background: var(--black3);
+    letter-spacing: 0.2px;
+    transition: var(--transition);
+  }
+  .pv-service-tag:hover { background: var(--gold-muted); color: var(--gold-light); }
+
+  .pv-divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-border) 0%, transparent 100%);
+    margin: 22px 32px 0;
+  }
+
+  .pv-footer {
+    padding: 16px 32px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .pv-footer-left { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--gold-dim); letter-spacing: 0.5px; }
+  .pv-footer-right { font-size: 11px; color: var(--text-dim); letter-spacing: 0.8px; }
+  .pv-footer-line {
+    width: 1px; height: 14px;
+    background: var(--gold-border);
+    display: inline-block; margin: 0 10px; vertical-align: middle;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .right-panel { max-height: none; }
+    .left-panel { max-height: none; }
+    .pv-body { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .field.full { grid-column: 1; }
+    .profile-preview { padding: 16px; }
+    .pv-hero { padding: 22px 20px 18px; }
+    .pv-body { padding: 20px 20px 0; }
+    .pv-footer { padding: 14px 20px 20px; }
+    .pv-divider { margin: 16px 20px 0; }
+  }
+
+  /* ── TOASTS ── */
+  .toast-container {
+    position: fixed; bottom: 24px; right: 24px;
+    display: flex; flex-direction: column; gap: 8px; z-index: 9999;
+  }
+  .toast {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px; font-weight: 500;
+    padding: 11px 18px;
+    border-radius: var(--radius);
+    display: flex; align-items: center; gap: 9px;
+    animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
+    pointer-events: none;
+    max-width: 300px;
+  }
+  .toast-success { background: var(--black2); border: 1px solid rgba(39,174,96,0.5); color: var(--success); }
+  .toast-error { background: var(--black2); border: 1px solid rgba(192,57,43,0.5); color: var(--danger); }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
+
+  /* scrollbar for left panel */
+  .left-panel::-webkit-scrollbar { width: 4px; }
+  .left-panel::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 2px; }
+
+  /* form clear animation */
+  input.cleared, textarea.cleared, select.cleared {
+    animation: clearFlash 0.4s ease;
+  }
+  @keyframes clearFlash { 0%,100% { background: var(--black3); } 50% { background: var(--black4); } }
+</style>
+</head>
+<body>
+
+<!-- ── TOPBAR ── -->
+<header class="topbar">
+  <div class="topbar-logo">
+    <span class="dot"></span>
+    PROFILIO
+  </div>
+  <div class="topbar-divider"></div>
+  <span class="topbar-tag">Company Profile Builder</span>
+</header>
+
+<!-- ── LAYOUT ── -->
+<div class="layout">
+
+  <!-- LEFT PANEL -->
+  <aside class="left-panel">
+    <div class="panel-tabs">
+      <button class="panel-tab active" onclick="switchPanelTab('edit', this)">
+        ✦ Edit Profile
+      </button>
+      <button class="panel-tab" onclick="switchPanelTab('history', this)">
+        ◎ History
+      </button>
+    </div>
+
+    <!-- EDIT TAB -->
+    <div class="tab-content active" id="tc-edit">
+      <div class="form-scroll">
+
+        <!-- Basic Info -->
+        <div>
+          <div class="form-section-title">Basic Information</div>
+          <div style="height:14px"></div>
+          <div class="form-grid">
+            <div class="field full">
+              <label>Company Name *</label>
+              <input type="text" id="f-name" placeholder="e.g. Apex Ventures" oninput="liveUpdate()" />
+            </div>
+            <div class="field full">
+              <label>Tagline / Slogan</label>
+              <input type="text" id="f-tagline" placeholder="e.g. Building tomorrow, today" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Industry</label>
+              <input type="text" id="f-industry" placeholder="e.g. Technology" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Sub-sector</label>
+              <input type="text" id="f-subsector" placeholder="e.g. SaaS, Fintech" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Founded Year</label>
+              <input type="text" id="f-founded" placeholder="e.g. 2015" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Registration No.</label>
+              <input type="text" id="f-regno" placeholder="e.g. CIN / GST" oninput="liveUpdate()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div>
+          <div class="form-section-title">About the Company</div>
+          <div style="height:14px"></div>
+          <div class="field">
+            <label>Description</label>
+            <textarea id="f-about" placeholder="Describe what your company does, its mission and vision..." oninput="liveUpdate(); updateCharCount(this, 'cc-about', 500)"></textarea>
+            <div class="char-count" id="cc-about">0 / 500</div>
+          </div>
+          <div style="height:12px"></div>
+          <div class="field">
+            <label>Mission Statement</label>
+            <textarea id="f-mission" style="min-height:60px" placeholder="Our mission is to..." oninput="liveUpdate()"></textarea>
+          </div>
+        </div>
+
+        <!-- Company Details -->
+        <div>
+          <div class="form-section-title">Company Details</div>
+          <div style="height:14px"></div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Company Size</label>
+              <select id="f-size" onchange="liveUpdate()">
+                <option value="">-- Select --</option>
+                <option>1–10 employees</option>
+                <option>11–50 employees</option>
+                <option>51–200 employees</option>
+                <option>201–500 employees</option>
+                <option>501–1000 employees</option>
+                <option>1000+ employees</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Company Type</label>
+              <select id="f-type" onchange="liveUpdate()">
+                <option value="">-- Select --</option>
+                <option>Private Limited</option>
+                <option>Public Limited</option>
+                <option>Partnership</option>
+                <option>Sole Proprietorship</option>
+                <option>LLP</option>
+                <option>Non-profit / NGO</option>
+                <option>Startup</option>
+                <option>Government</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Headquarters</label>
+              <input type="text" id="f-hq" placeholder="e.g. Mumbai, India" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Operating Regions</label>
+              <input type="text" id="f-regions" placeholder="e.g. Pan India, US, UK" oninput="liveUpdate()" />
+            </div>
+            <div class="field full">
+              <label>Full Address</label>
+              <textarea id="f-address" style="min-height:60px" placeholder="Street, City, State, PIN, Country" oninput="liveUpdate()"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <div class="form-section-title">Services & Products</div>
+          <div style="height:14px"></div>
+          <div class="field">
+            <label>Services / Products (comma separated)</label>
+            <input type="text" id="f-services" placeholder="e.g. Web Dev, Consulting, SaaS Platform" oninput="liveUpdate()" />
+          </div>
+          <div style="height:12px"></div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Annual Revenue</label>
+              <input type="text" id="f-revenue" placeholder="e.g. ₹50 Cr / $2M" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Clients Served</label>
+              <input type="text" id="f-clients" placeholder="e.g. 200+ clients" oninput="liveUpdate()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <div class="form-section-title">Contact Information</div>
+          <div style="height:14px"></div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Email Address</label>
+              <input type="email" id="f-email" placeholder="info@company.com" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Phone Number</label>
+              <input type="text" id="f-phone" placeholder="+91 98765 43210" oninput="liveUpdate()" />
+            </div>
+            <div class="field full">
+              <label>Website URL</label>
+              <input type="text" id="f-website" placeholder="https://yourcompany.com" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>LinkedIn</label>
+              <input type="text" id="f-linkedin" placeholder="linkedin.com/company/..." oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Twitter / X</label>
+              <input type="text" id="f-twitter" placeholder="@yourcompany" oninput="liveUpdate()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Person -->
+        <div>
+          <div class="form-section-title">Key Person</div>
+          <div style="height:14px"></div>
+          <div class="form-grid">
+            <div class="field">
+              <label>CEO / Founder Name</label>
+              <input type="text" id="f-ceo" placeholder="e.g. Rajesh Mehta" oninput="liveUpdate()" />
+            </div>
+            <div class="field">
+              <label>Designation</label>
+              <input type="text" id="f-designation" placeholder="e.g. CEO & Founder" oninput="liveUpdate()" />
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /form-scroll -->
+
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="saveProfile()">
+          ⬦ Save Profile
+        </button>
+        <button class="btn btn-ghost" onclick="clearForm()">
+          ✕ Clear
+        </button>
+        <div class="save-flash" id="save-flash">✓ Saved!</div>
+      </div>
+    </div><!-- /tc-edit -->
+
+    <!-- HISTORY TAB -->
+    <div class="tab-content" id="tc-history">
+      <div class="history-header">
+        <h2>Saved Profiles</h2>
+        <span class="badge-count" id="hist-count">0</span>
+      </div>
+      <div class="history-scroll" id="history-list"></div>
+    </div>
+
+  </aside><!-- /left-panel -->
+
+  <!-- RIGHT PANEL — PREVIEW -->
+  <main class="right-panel">
+    <div class="preview-label">
+      <span class="live-dot"></span>
+      Live Preview
+    </div>
+    <div class="profile-preview">
+      <div class="profile-card" id="profile-card">
+
+        <!-- HERO -->
+        <div class="pv-hero">
+          <div class="pv-top-row">
+            <div class="pv-logo-box" id="pv-logo">A</div>
+            <div>
+              <div class="pv-company-name" id="pv-name">Your Company Name</div>
+              <div class="pv-tagline" id="pv-tagline">Tagline / slogan appears here</div>
+            </div>
+          </div>
+          <div class="pv-chips" id="pv-chips"></div>
+        </div>
+
+        <!-- BODY -->
+        <div class="pv-body">
+
+          <div class="pv-section full" id="pv-about-sec">
+            <div class="pv-section-title">About</div>
+            <p class="pv-about-text" id="pv-about">Your company description will appear here. Fill in the form on the left to build your profile.</p>
+          </div>
+
+          <div class="pv-section" id="pv-details-sec">
+            <div class="pv-section-title">Company Details</div>
+            <div id="pv-details"></div>
+          </div>
+
+          <div class="pv-section" id="pv-contact-sec">
+            <div class="pv-section-title">Contact</div>
+            <div id="pv-contact"></div>
+          </div>
+
+          <div class="pv-section full" id="pv-services-sec" style="display:none">
+            <div class="pv-section-title">Services &amp; Products</div>
+            <div class="pv-services-wrap" id="pv-services"></div>
+          </div>
+
+          <div class="pv-section full" id="pv-mission-sec" style="display:none">
+            <div class="pv-section-title">Mission</div>
+            <p class="pv-about-text" id="pv-mission-text"></p>
+          </div>
+
+          <div class="pv-section full" id="pv-ceo-sec" style="display:none">
+            <div class="pv-section-title">Leadership</div>
+            <div id="pv-ceo"></div>
+          </div>
+
+        </div><!-- /pv-body -->
+
+        <div class="pv-divider"></div>
+
+        <div class="pv-footer">
+          <div class="pv-footer-left" id="pv-footer-name">Company Name</div>
+          <div class="pv-footer-right">
+            <span id="pv-footer-type"></span>
+            <span class="pv-footer-line" id="pv-footer-line" style="display:none"></span>
+            <span id="pv-footer-year"></span>
+          </div>
+        </div>
+
+      </div><!-- /profile-card -->
+    </div>
+  </main>
+
+</div><!-- /layout -->
+
+<!-- TOASTS -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+const STORE = 'profilio_v2';
+
+/* ── STORAGE ── */
+function getAll() { try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { return []; } }
+function saveAll(arr) { localStorage.setItem(STORE, JSON.stringify(arr)); }
+
+/* ── READ FORM ── */
+function readForm() {
+  return {
+    id: Date.now(),
+    savedAt: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+    name:        v('f-name'),
+    tagline:     v('f-tagline'),
+    industry:    v('f-industry'),
+    subsector:   v('f-subsector'),
+    founded:     v('f-founded'),
+    regno:       v('f-regno'),
+    about:       v('f-about'),
+    mission:     v('f-mission'),
+    size:        v('f-size'),
+    type:        v('f-type'),
+    hq:          v('f-hq'),
+    regions:     v('f-regions'),
+    address:     v('f-address'),
+    services:    v('f-services'),
+    revenue:     v('f-revenue'),
+    clients:     v('f-clients'),
+    email:       v('f-email'),
+    phone:       v('f-phone'),
+    website:     v('f-website'),
+    linkedin:    v('f-linkedin'),
+    twitter:     v('f-twitter'),
+    ceo:         v('f-ceo'),
+    designation: v('f-designation'),
+  };
+}
+
+function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+/* ── FILL FORM ── */
+function fillForm(d) {
+  const map = {
+    'f-name': 'name', 'f-tagline': 'tagline', 'f-industry': 'industry',
+    'f-subsector': 'subsector', 'f-founded': 'founded', 'f-regno': 'regno',
+    'f-about': 'about', 'f-mission': 'mission', 'f-size': 'size',
+    'f-type': 'type', 'f-hq': 'hq', 'f-regions': 'regions',
+    'f-address': 'address', 'f-services': 'services', 'f-revenue': 'revenue',
+    'f-clients': 'clients', 'f-email': 'email', 'f-phone': 'phone',
+    'f-website': 'website', 'f-linkedin': 'linkedin', 'f-twitter': 'twitter',
+    'f-ceo': 'ceo', 'f-designation': 'designation',
+  };
+  Object.entries(map).forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = d[key] || '';
+  });
+  updateCharCount(document.getElementById('f-about'), 'cc-about', 500);
+  liveUpdate();
+}
+
+/* ── CHAR COUNT ── */
+function updateCharCount(el, countId, max) {
+  const cnt = document.getElementById(countId);
+  if (cnt) cnt.textContent = el.value.length + ' / ' + max;
+}
+
+/* ── SAVE PROFILE ── */
+function saveProfile() {
+  const d = readForm();
+  if (!d.name) { toast('Enter a company name first.', 'error'); return; }
+  const all = getAll();
+  all.unshift(d);
+  if (all.length > 50) all.splice(50);
+  saveAll(all);
+  renderHistory();
+  toast('Profile saved successfully!', 'success');
+  const flash = document.getElementById('save-flash');
+  flash.style.display = 'flex';
+  setTimeout(() => flash.style.display = 'none', 2500);
+}
+
+/* ── CLEAR FORM ── */
+function clearForm() {
+  const ids = ['f-name','f-tagline','f-industry','f-subsector','f-founded','f-regno','f-about','f-mission','f-size','f-type','f-hq','f-regions','f-address','f-services','f-revenue','f-clients','f-email','f-phone','f-website','f-linkedin','f-twitter','f-ceo','f-designation'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.classList.add('cleared'); setTimeout(() => el.classList.remove('cleared'), 400); }
+  });
+  updateCharCount(document.getElementById('f-about'), 'cc-about', 500);
+  liveUpdate();
+}
+
+/* ── DELETE ── */
+function deleteProfile(id) {
+  const all = getAll().filter(p => p.id !== id);
+  saveAll(all);
+  renderHistory();
+  toast('Profile deleted.', 'success');
+}
+
+/* ── LOAD PROFILE ── */
+function loadProfile(id) {
+  const d = getAll().find(p => p.id === id);
+  if (!d) return;
+  fillForm(d);
+  switchPanelTab('edit', document.querySelector('.panel-tab'));
+  toast('Profile loaded for editing.', 'success');
+}
+
+/* ── RENDER HISTORY ── */
+function renderHistory() {
+  const all = getAll();
+  const list = document.getElementById('history-list');
+  const cnt = document.getElementById('hist-count');
+  cnt.textContent = all.length;
+  if (!all.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">◇</div><p>No profiles saved yet.<br>Fill in the form and click <strong>Save Profile</strong>.</p></div>`;
+    return;
+  }
+  list.innerHTML = all.map(d => `
+    <div class="history-card">
+      <div class="history-card-top">
+        <div>
+          <div class="history-card-name">${esc(d.name)}</div>
+          <div class="history-card-meta">${[d.industry, d.hq, d.savedAt].filter(Boolean).join(' · ')}</div>
+        </div>
+        <div class="history-card-actions">
+          <button class="btn btn-ghost btn-sm" onclick="loadProfile(${d.id})">Load &amp; Edit</button>
+          <button class="btn btn-danger-ghost btn-sm" onclick="deleteProfile(${d.id})">✕</button>
+        </div>
+      </div>
+      ${d.about ? `<div class="history-card-desc">${esc(d.about.substring(0,120))}${d.about.length > 120 ? '…' : ''}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+/* ── LIVE PREVIEW UPDATE ── */
+function liveUpdate() {
+  const d = readForm();
+  const name = d.name || 'Your Company Name';
+
+  // Logo & Name
+  document.getElementById('pv-logo').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('pv-name').textContent = name;
+  document.getElementById('pv-tagline').textContent = d.tagline || 'Tagline / slogan appears here';
+  document.getElementById('pv-footer-name').textContent = name;
+
+  // Chips
+  const chips = document.getElementById('pv-chips');
+  chips.innerHTML = [d.industry, d.subsector, d.type, d.size, d.founded ? 'Est. ' + d.founded : ''].filter(Boolean)
+    .map(c => `<span class="pv-chip">${esc(c)}</span>`).join('');
+
+  // About
+  document.getElementById('pv-about').textContent = d.about || 'Your company description will appear here.';
+
+  // Details
+  const details = [];
+  if (d.hq) details.push(infoRow('📍', 'Headquarters', d.hq));
+  if (d.regions) details.push(infoRow('🌐', 'Regions', d.regions));
+  if (d.founded) details.push(infoRow('📅', 'Founded', d.founded));
+  if (d.size) details.push(infoRow('👥', 'Team Size', d.size));
+  if (d.revenue) details.push(infoRow('💰', 'Revenue', d.revenue));
+  if (d.clients) details.push(infoRow('🤝', 'Clients', d.clients));
+  if (d.regno) details.push(infoRow('📋', 'Reg. No.', d.regno));
+  document.getElementById('pv-details').innerHTML = details.join('') || emptyVal();
+
+  // Contact
+  const contact = [];
+  if (d.email) contact.push(infoRow('✉', 'Email', `<a href="mailto:${esc(d.email)}">${esc(d.email)}</a>`));
+  if (d.phone) contact.push(infoRow('☎', 'Phone', d.phone));
+  if (d.website) contact.push(infoRow('🔗', 'Website', `<a href="${esc(d.website)}" target="_blank">${esc(d.website)}</a>`));
+  if (d.linkedin) contact.push(infoRow('in', 'LinkedIn', `<a href="https://${d.linkedin.replace(/^https?:\/\//,'')}" target="_blank">${esc(d.linkedin)}</a>`));
+  if (d.twitter) contact.push(infoRow('𝕏', 'Twitter', esc(d.twitter)));
+  document.getElementById('pv-contact').innerHTML = contact.join('') || emptyVal();
+
+  // Services
+  const svcSec = document.getElementById('pv-services-sec');
+  const svcEl = document.getElementById('pv-services');
+  if (d.services) {
+    svcSec.style.display = '';
+    svcEl.innerHTML = d.services.split(',').map(s => s.trim()).filter(Boolean)
+      .map(s => `<span class="pv-service-tag">${esc(s)}</span>`).join('');
+  } else {
+    svcSec.style.display = 'none';
+  }
+
+  // Mission
+  const msnSec = document.getElementById('pv-mission-sec');
+  const msnTxt = document.getElementById('pv-mission-text');
+  if (d.mission) { msnSec.style.display = ''; msnTxt.textContent = d.mission; }
+  else { msnSec.style.display = 'none'; }
+
+  // CEO
+  const ceoSec = document.getElementById('pv-ceo-sec');
+  const ceoEl = document.getElementById('pv-ceo');
+  if (d.ceo) {
+    ceoSec.style.display = '';
+    ceoEl.innerHTML = infoRow('★', d.designation || 'Key Person', d.ceo);
+  } else { ceoSec.style.display = 'none'; }
+
+  // Footer
+  document.getElementById('pv-footer-type').textContent = d.type || '';
+  document.getElementById('pv-footer-year').textContent = d.founded ? 'Est. ' + d.founded : '';
+  const line = document.getElementById('pv-footer-line');
+  line.style.display = (d.type && d.founded) ? 'inline-block' : 'none';
+}
+
+function infoRow(icon, label, val) {
+  return `<div class="pv-info-row" style="margin-bottom:10px">
+    <div class="pv-info-icon">${icon}</div>
+    <div>
+      <div class="pv-info-label">${esc(label)}</div>
+      <div class="pv-info-val">${val}</div>
+    </div>
+  </div>`;
+}
+function emptyVal() { return '<span style="color:var(--text-dim);font-size:13px">—</span>'; }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── TABS ── */
+function switchPanelTab(name, clickedBtn) {
+  document.querySelectorAll('.panel-tab').forEach((b,i) => b.classList.toggle('active', ['edit','history'][i] === name));
+  document.getElementById('tc-edit').classList.toggle('active', name === 'edit');
+  document.getElementById('tc-history').classList.toggle('active', name === 'history');
+  if (name === 'history') renderHistory();
+}
+
+/* ── TOASTS ── */
+function toast(msg, type) {
+  const wrap = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = 'toast toast-' + type;
+  el.textContent = (type === 'success' ? '✓  ' : '✕  ') + msg;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+/* ── INIT ── */
+liveUpdate();
+renderHistory();
+</script>
+</body>
+</html>

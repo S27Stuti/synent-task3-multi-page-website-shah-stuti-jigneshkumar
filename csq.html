@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security Elite – Gold Certification</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Cinzel:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#050505; --card:#0d0d0d; --border:#2d2613;
+  --gold:#d4af37; --gold-glow:rgba(212, 175, 55, 0.3); --text:#e0e0e0;
+  --muted:#666; --red:#ff4d4d; --green:#00ff41;
+}
+body{
+  font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh;
+  background-image: linear-gradient(to bottom, #0a0a0a 0%, #000 100%);
+}
+
+/* Header Section */
+.header{ background:rgba(0,0,0,0.9); border-bottom:1px solid var(--border); padding:16px 30px; display:flex; align-items:center; position:sticky; top:0; z-index:100; backdrop-filter:blur(10px); }
+.logo-mark{ width:40px; height:40px; border:2px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--gold); font-family:'Space Mono'; box-shadow: 0 0 10px var(--gold-glow); }
+.logo-text{ margin-left:12px; font-size:22px; font-weight:800; font-family:'Cinzel', serif; letter-spacing:1px; color:#fff; }
+.logo-text span{ color:var(--gold); }
+
+/* User Entry Overlay */
+.name-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.98); display:flex; align-items:center; justify-content:center; z-index:999; }
+.name-card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:50px; max-width:460px; width:100%; text-align:center; box-shadow:0 0 50px rgba(212,175,55,0.1); }
+.name-card h2{ font-family:'Cinzel', serif; color:var(--gold); font-size:28px; margin-bottom:10px; }
+.input-group{ margin-bottom:25px; text-align:left; }
+.input-group label{ display:block; font-size:10px; color:var(--gold); margin-bottom:8px; font-family:'Space Mono'; text-transform:uppercase; letter-spacing:2px; }
+.input-group input{ width:100%; background:#111; border:1px solid #333; border-radius:4px; padding:15px; color:#fff; outline:none; border-bottom:2px solid var(--border); transition:0.3s; }
+.input-group input:focus{ border-bottom-color:var(--gold); }
+
+.start-btn{ width:100%; background:var(--gold); color:#000; border:none; padding:18px; font-weight:800; cursor:pointer; font-size:14px; text-transform:uppercase; letter-spacing:2px; transition:0.3s; }
+.start-btn:hover{ background:#f1d592; box-shadow:0 0 20px var(--gold-glow); }
+
+/* Quiz Interface */
+.container{ max-width:850px; margin:auto; padding:50px 20px; }
+.question-box{ background:var(--card); border:1px solid var(--border); border-radius:8px; padding:35px; margin-bottom:25px; position:relative; }
+.question-box p{ font-family:'Space Mono', monospace; font-size:16px; margin-bottom:20px; line-height:1.6; color:#fff; }
+.option{ display:flex; align-items:center; gap:15px; padding:16px; margin:12px 0; background:#080808; cursor:pointer; border:1px solid #1a1a1a; transition:0.2s; font-size:14px; }
+.option:hover{ border-color:var(--gold); background:#111; }
+.option.selected{ border-color:var(--gold); background:rgba(212,175,55,0.08); color:var(--gold); }
+
+.progress-bar{ height:4px; background:#111; border-radius:10px; margin-bottom:40px; }
+.progress-fill{ height:100%; background:var(--gold); width:0%; transition:0.5s; box-shadow:0 0 10px var(--gold); }
+
+/* Result Display */
+.result-card{ background:var(--card); border:2px solid var(--gold); padding:50px; text-align:center; }
+.score-big{ font-size:80px; font-weight:800; color:var(--gold); font-family:'Cinzel', serif; text-shadow:0 0 20px var(--gold-glow); }
+.cert-btn{ width:100%; max-width:400px; background:transparent; color:var(--gold); border:2px solid var(--gold); padding:20px; border-radius:4px; font-weight:800; cursor:pointer; margin-top:30px; font-size:16px; text-transform:uppercase; letter-spacing:3px; }
+.cert-btn:hover{ background:var(--gold); color:#000; }
+
+/* Gold-Black Certificate */
+.cert-modal{ position:fixed; inset:0; background:rgba(0,0,0,0.99); display:none; align-items:center; justify-content:center; z-index:10000; padding:20px; }
+.cert-modal.show{ display:flex; }
+.certificate{ width:800px; height:560px; background:#000; color:#fff; position:relative; border:10px solid var(--gold); padding:5px; }
+.cert-inner{ border:1px solid var(--gold); height:100%; width:100%; padding:60px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; text-align:center; background: radial-gradient(circle, #0d0d0d 0%, #000 100%); }
+</style>
+</head>
+<body>
+
+<div class="name-overlay" id="name-overlay">
+  <div class="name-card">
+    <h2>Access <span>Granted</span></h2>
+    <p style="color:var(--muted); margin-bottom:30px; font-family:'Space Mono'; font-size:12px;">CYBER SECURITY CLEARANCE LEVEL 1</p>
+    <div class="input-group">
+      <label>Operator Name</label>
+      <input type="text" id="user-name" placeholder="Enter Codename/Full Name">
+    </div>
+    <div class="input-group">
+      <label>Assignment</label>
+      <input type="text" id="user-course" value="Offensive & Defensive Security Mastery">
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Initialize Protocol</button>
+  </div>
+</div>
+
+<div class="header">
+  <div class="logo-mark">CS</div>
+  <div class="logo-text">CYBER<span>GOLD</span></div>
+</div>
+
+<div class="container">
+  <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-family:'Space Mono'; font-size:11px; letter-spacing:1px;">
+    <div id="answered-count">NODES SCANNED: 0/40</div>
+    <div id="timer" style="color:var(--gold);">50:00</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <form id="quiz-form"></form>
+  <button class="start-btn" id="submit-btn" style="display:none; margin-top:20px;" onclick="submitQuiz()">Complete Decryption</button>
+  <div id="result-area"></div>
+</div>
+
+<div class="cert-modal" id="cert-modal">
+  <div style="text-align:center">
+    <div id="certificate-preview"></div>
+    <div style="display:flex; gap:15px; margin-top:25px; justify-content:center;">
+        <button class="start-btn" style="width:250px" onclick="downloadCert()">Save Secure PDF</button>
+        <button class="start-btn" style="width:120px; background:#222; color:#fff; border:1px solid #444;" onclick="closeCertModal()">Exit</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+const questions = [
+    { q: "What does 'CIA' stand for in Cyber Security?", options: ["Central Intelligence Agency", "Confidentiality, Integrity, Availability", "Common Identity Access", "Cyber Internal Audit"], answer: 1 },
+    { q: "Which type of attack uses a fake login page to steal credentials?", options: ["Phishing", "DDoS", "SQL Injection", "Brute Force"], answer: 0 },
+    { q: "What is the full form of 'VPN'?", options: ["Virtual Private Network", "Visual Personal Node", "Verified Path Network", "None"], answer: 0 },
+    { q: "Which protocol is more secure for websites?", options: ["HTTP", "FTP", "HTTPS", "Telnet"], answer: 2 },
+    { q: "What is a 'Firewall' used for?", options: ["Cleaning viruses", "Filtering network traffic", "Encrypting files", "Deleting spam"], answer: 1 },
+    { q: "What does 'DDoS' stand for?", options: ["Direct Data on Server", "Distributed Denial of Service", "Deep Drive Operating System", "None"], answer: 1 },
+    { q: "Which malware locks your files and demands money?", options: ["Spyware", "Ransomware", "Trojan", "Adware"], answer: 1 },
+    { q: "What is the default port for HTTPS?", options: ["80", "21", "443", "22"], answer: 2 },
+    { q: "What is 'Social Engineering'?", options: ["Repairing social media", "Manipulating people to give up info", "Coding social apps", "None"], answer: 1 },
+    { q: "Which of these is a strong password?", options: ["password123", "admin", "S3cure#P@ss!", "12345678"], answer: 2 },
+    { q: "What is 'SQL Injection'?", options: ["Adding data to SQL", "Malicious code in database queries", "Speeding up SQL", "None"], answer: 1 },
+    { q: "What is a 'Zero-day' vulnerability?", options: ["A bug fixed today", "A vulnerability unknown to developers", "A 24-hour virus", "None"], answer: 1 },
+    { q: "Which tool is commonly used for Network Scanning?", options: ["Photoshop", "Nmap", "Excel", "VS Code"], answer: 1 },
+    { q: "What is 'Cryptography'?", options: ["Study of maps", "Study of secure communication", "Digital photography", "None"], answer: 1 },
+    { q: "What does '2FA' mean?", options: ["Two File Access", "Two Factor Authentication", "Second Form Audit", "None"], answer: 1 },
+    { q: "A 'White Hat' hacker is also known as?", options: ["Criminal", "Ethical Hacker", "Spy", "Student"], answer: 1 },
+    { q: "Which OS is most popular for penetration testing?", options: ["Windows", "MacOS", "Kali Linux", "Android"], answer: 2 },
+    { q: "What is 'Brute Force'?", options: ["Using a hammer", "Trial-and-error password cracking", "Large data transfer", "None"], answer: 1 },
+    { q: "What is a 'Trojan Horse'?", options: ["A fast virus", "Fake software hiding malware", "A security tool", "Hardware virus"], answer: 1 },
+    { q: "What is 'Packet Sniffing'?", options: ["Smelling hardware", "Intercepting data on a network", "Sending emails", "None"], answer: 1 },
+    { q: "Which protocol is used for secure remote login?", options: ["HTTP", "SSH", "SNMP", "SMTP"], answer: 1 },
+    { q: "What is the purpose of 'Salting' in hashing?", options: ["Making it taste better", "Adding random data to passwords before hashing", "Deleting data", "None"], answer: 1 },
+    { q: "What is a 'Keylogger'?", options: ["Keyboard cleaner", "Software that records every keystroke", "Unlocking tool", "None"], answer: 1 },
+    { q: "What does 'MITM' stand for?", options: ["Man-In-The-Middle", "Mobile Internal Task Manager", "Massive Internet Traffic Mode", "None"], answer: 0 },
+    { q: "Which is a wireless security protocol?", options: ["WPA3", "HTTP", "SQL", "FTP"], answer: 0 },
+    { q: "What is 'Penetration Testing'?", options: ["Writing code", "Simulated cyber attack to find bugs", "Buying servers", "None"], answer: 1 },
+    { q: "What is 'Dark Web'?", options: ["Web with dark mode", "Hidden part of internet requiring special software", "Offline web", "None"], answer: 1 },
+    { q: "What is a 'Botnet'?", options: ["Robot network", "Network of compromised computers", "AI website", "None"], answer: 1 },
+    { q: "Which port is used by SSH?", options: ["21", "22", "23", "25"], answer: 1 },
+    { q: "What is 'Steganography'?", options: ["Writing poems", "Hiding data inside other files", "Network mapping", "None"], answer: 1 },
+    { q: "What is 'Cross-Site Scripting (XSS)'?", options: ["Crossing two sites", "Injecting malicious scripts into websites", "CSS error", "None"], answer: 1 },
+    { q: "What is 'Principle of Least Privilege'?", options: ["Giving no access", "Giving only necessary access", "Giving full access", "None"], answer: 1 },
+    { q: "What is a 'Honey Pot'?", options: ["A sweet trap for hackers", "A database of passwords", "Anti-virus", "None"], answer: 0 },
+    { q: "What is 'Encryption'?", options: ["Deleting files", "Converting data into unreadable code", "Copying files", "None"], answer: 1 },
+    { q: "What is 'DNS Spoofing'?", options: ["Changing IP addresses in DNS cache", "Speeding up DNS", "Deleting DNS", "None"], answer: 0 },
+    { q: "Which is a Symmetric Encryption algorithm?", options: ["AES", "RSA", "Diffie-Hellman", "None"], answer: 0 },
+    { q: "What is 'Identity Theft'?", options: ["Losing your ID card", "Stealing personal info to impersonate someone", "Changing your name", "None"], answer: 1 },
+    { q: "What does 'IPS' stand for?", options: ["Intrusion Prevention System", "Internal Power Supply", "Internet Path Sector", "None"], answer: 0 },
+    { q: "What is 'Worm' in malware?", options: ["Small hardware bug", "Self-replicating malware", "Internet cable", "None"], answer: 1 },
+    { q: "What is 'Patch Management'?", options: ["Managing cloth patches", "Updating software to fix vulnerabilities", "Deleting old files", "None"], answer: 1 }
+];
+
+let userName = '', userCourse = '', userAnswers = new Array(questions.length).fill(null), totalTime = 3000;
+
+function startQuiz() {
+    userName = document.getElementById('user-name').value;
+    userCourse = document.getElementById('user-course').value;
+    if(!userName) return alert("System requires identity input to proceed.");
+    document.getElementById('name-overlay').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'block';
+    renderQuiz();
+    setInterval(updateTimer, 1000);
+}
+
+function renderQuiz() {
+    const form = document.getElementById('quiz-form');
+    questions.forEach((q, i) => {
+        const div = document.createElement('div');
+        div.className = 'question-box';
+        div.innerHTML = `<p>> [SYSTEM_QUERY_${i+1}]: ${q.q}</p>` +
+        q.options.map((opt, j) => `<div class="option" id="opt-${i}-${j}" onclick="select(${i},${j})">${opt}</div>`).join('');
+        form.appendChild(div);
+    });
+}
+
+function select(qi, oi) {
+    userAnswers[qi] = oi;
+    document.querySelectorAll(`[id^='opt-${qi}-']`).forEach(el => el.classList.remove('selected'));
+    document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+    const answered = userAnswers.filter(a => a !== null).length;
+    document.getElementById('answered-count').innerText = `NODES SCANNED: ${answered}/40`;
+    document.getElementById('progress-fill').style.width = (answered/40*100)+'%';
+}
+
+function updateTimer() {
+    if(totalTime <= 0) return;
+    totalTime--;
+    let m = Math.floor(totalTime/60), s = totalTime%60;
+    document.getElementById('timer').innerText = `REMAINING: ${m}:${s<10?'0':''}${s}`;
+}
+
+function submitQuiz() {
+    let score = 0;
+    questions.forEach((q, i) => { if(userAnswers[i] === q.answer) score++; });
+    let percent = (score/40)*100;
+    let html = `<div class="result-card"><div class="score-big">${percent}%</div><p style="color:var(--muted); font-family:'Space Mono'; margin-top:10px;">DECRYPTION SUCCESS: ${score}/40</p>`;
+    
+    if(percent >= 80) {
+        html += `<p style="margin-top:20px; color:var(--gold)">Elite status confirmed. Certification unlocked.</p>
+                 <button class="cert-btn" onclick="showCert(${score})">View Gold Certificate</button>`;
+    } else {
+        html += `<p style="color:var(--red); margin-top:20px;">Security Clearance Denied. Score 80% or higher to be certified.</p>`;
+    }
+    
+    html += '</div>';
+    document.getElementById('result-area').innerHTML = html;
+    window.scrollTo({top: document.getElementById('result-area').offsetTop, behavior:'smooth'});
+}
+
+function showCert(s) {
+    document.getElementById('certificate-preview').innerHTML = `
+        <div class="certificate" id="cert-pdf">
+            <div class="cert-inner">
+                <h4 style="color:var(--gold); font-family:'Space Mono'; letter-spacing:5px">SECURITY CLEARANCE LEVEL 1</h4>
+                <h1 style="font-family:'Cinzel', serif; font-size:42px; color:var(--gold); margin:10px 0;">CYBER SPECIALIST</h1>
+                <p style="font-size:16px; opacity:0.8">THIS DOCUMENT VERIFIES THAT</p>
+                <h2 style="font-size:38px; color:#fff; border-bottom:1px solid var(--gold); padding-bottom:5px; margin:20px 0;">${userName}</h2>
+                <p>HAS SUCCESSFULLY MASTERED THE DOMAINS OF</p>
+                <h3 style="font-size:20px; color:var(--gold); font-family:'Space Mono'">${userCourse}</h3>
+                <div style="width:100%; border-top:1px solid #333; padding-top:40px; margin-top:40px; display:flex; justify-content:space-between; font-family:'Space Mono'; font-size:10px;">
+                    <div style="text-align:left">
+                        <p>ID: #CX-889-${Math.floor(Math.random()*99999)}</p>
+                        <p>ISSUED: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <div style="text-align:right">
+                        <p>INTERNCONNECT ELITE</p>
+                        <p>VALIDATED ENCRYPTION: 1024-AES</p>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    document.getElementById('cert-modal').classList.add('show');
+}
+
+function closeCertModal() { document.getElementById('cert-modal').classList.remove('show'); }
+
+async function downloadCert() {
+    const certElement = document.getElementById('cert-pdf');
+    const canvas = await html2canvas(certElement, { scale: 3 });
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('l', 'mm', 'a4');
+    pdf.addImage(imgData, 'PNG', 0, 0, 297, 210);
+    pdf.save(`EliteCert_Cyber_${userName}.pdf`);
+}
+</script>
+</body>
+</html>

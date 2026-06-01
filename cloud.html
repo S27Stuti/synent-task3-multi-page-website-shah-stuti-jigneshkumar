@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Engineer Job</title>
+  <link rel="stylesheet" href="cloud.css">
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<div class="job-container">
+
+  <h1 style="color:gold">Cloud Engineer</h1>
+  <p class="company">SkyNet Cloud Solutions</p>
+
+  <p class="tag">☁️ Remote / Hybrid</p>
+
+  <div class="details">
+    <span>Start Date: Immediately</span>
+    <span>CTC(Annual): ₹ 5,00,000 - 8,00,000</span>
+    <span>Experience: 0-1 year</span>
+    <span>Apply By: 5 June</span>
+  </div>
+
+  <div class="badges">
+    <span class="green">Actively Hiring</span>
+    <span class="blue">Fresher Friendly</span>
+  </div>
+
+  <!-- ABOUT -->
+  <h2>About the job</h2>
+  <p class="sub">Key Responsibilities:</p>
+
+  <ul>
+    <li>Manage and deploy applications on cloud platforms (AWS, Azure, GCP)</li>
+    <li>Monitor cloud infrastructure and ensure high availability</li>
+    <li>Work with DevOps tools for CI/CD pipelines</li>
+    <li>Optimize cloud costs and performance</li>
+    <li>Ensure security and backup of cloud data</li>
+  </ul>
+
+  <!-- SKILLS -->
+  <h2>Skills Required</h2>
+  <div class="skills">
+    <span>AWS</span>
+    <span>Azure</span>
+    <span>Google Cloud</span>
+    <span>Docker</span>
+    <span>Kubernetes</span>
+    <span>Linux</span>
+  </div>
+
+  <!-- PERKS -->
+  <h2>Perks</h2>
+  <div class="skills">
+    <span>5 Days a week</span>
+    <span>Flexible Hours</span>
+    <span>Certificate</span>
+    <span>Work from Home Option</span>
+  </div>
+
+  <p class="openings">Number of Opening: 2</p>
+
+  <!-- APPLY BUTTON -->
+  <button class="apply-btn" onclick="applyJob()">Apply Now</button>
+
+</div>
+
+<script>
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "jobs.html";
+  }
+}
+
+function applyJob() {
+  alert("✅ Application Submitted Successfully!");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DevOps Engineer Job</title>
+  <link rel="stylesheet" href="devops.css">
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<div class="job-container">
+
+  <h1 style="color:gold">DevOps Engineer</h1>
+  <p class="company">CloudOps Technologies</p>
+
+  <p class="tag">⚙️ Remote / Hybrid</p>
+
+  <div class="details">
+    <span>Start Date: Immediately</span>
+    <span>CTC(Annual): ₹ 6,00,000 - 10,00,000</span>
+    <span>Experience: 0-1 year</span>
+    <span>Apply By: 30 June</span>
+  </div>
+
+  <div class="badges">
+    <span class="green">Actively Hiring</span>
+    <span class="blue">Fresher Friendly</span>
+  </div>
+
+  <!-- ABOUT -->
+  <h2>About the job</h2>
+  <p class="sub">Key Responsibilities:</p>
+
+  <ul>
+    <li>Build and manage CI/CD pipelines</li>
+    <li>Deploy and monitor applications on cloud platforms</li>
+    <li>Automate infrastructure using tools like Terraform</li>
+    <li>Work with Docker and Kubernetes for containerization</li>
+    <li>Ensure system reliability, scalability, and security</li>
+  </ul>
+
+  <!-- SKILLS -->
+  <h2>Skills Required</h2>
+  <div class="skills">
+    <span>AWS</span>
+    <span>Docker</span>
+    <span>Kubernetes</span>
+    <span>Jenkins</span>
+    <span>Linux</span>
+    <span>CI/CD</span>
+  </div>
+
+  <!-- PERKS -->
+  <h2>Perks</h2>
+  <div class="skills">
+    <span>5 Days a week</span>
+    <span>Flexible Hours</span>
+    <span>Work from Home Option</span>
+    <span>Health Insurance</span>
+  </div>
+
+  <p class="openings">Number of Opening: 2</p>
+
+  <!-- APPLY BUTTON -->
+  <button class="apply-btn" onclick="applyJob()">Apply Now</button>
+
+</div>
+
+<script>
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "jobs.html";
+  }
+}
+
+function applyJob() {
+  alert("✅ Application Submitted Successfully!");
+}
+</script>
+
+</body>
+</html>

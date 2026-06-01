@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Developer Job</title>
+  <link rel="stylesheet" href="webdev.css">
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<div class="job-container">
+
+  <h1 style="color:gold">Web Developer</h1>
+  <p class="company">CodeCraft Technologies</p>
+
+  <p class="tag">💻 Hybrid / Remote</p>
+
+  <div class="details">
+    <span>Start Date: Immediately</span>
+    <span>CTC(Annual): ₹ 4,00,000 - 6,00,000</span>
+    <span>Experience: 0-1 year</span>
+    <span>Apply By: 30 May</span>
+  </div>
+
+  <div class="badges">
+    <span class="green">Actively Hiring</span>
+    <span class="blue">Fresher Friendly</span>
+  </div>
+
+  <!-- ABOUT -->
+  <h2>About the job</h2>
+  <p class="sub">Key Responsibilities:</p>
+
+  <ul>
+    <li>Develop responsive websites using HTML, CSS, and JavaScript</li>
+    <li>Work on frontend frameworks like React or Angular</li>
+    <li>Integrate APIs and backend services</li>
+    <li>Debug and optimize web performance</li>
+    <li>Collaborate with UI/UX designers and backend developers</li>
+  </ul>
+
+  <!-- SKILLS -->
+  <h2>Skills Required</h2>
+  <div class="skills">
+    <span>HTML</span>
+    <span>CSS</span>
+    <span>JavaScript</span>
+    <span>React</span>
+    <span>Bootstrap</span>
+    <span>Git</span>
+  </div>
+
+  <!-- PERKS -->
+  <h2>Perks</h2>
+  <div class="skills">
+    <span>5 Days a week</span>
+    <span>Flexible Hours</span>
+    <span>Certificate</span>
+    <span>Work from Home Option</span>
+  </div>
+
+  <p class="openings">Number of Opening: 3</p>
+
+  <!-- APPLY BUTTON -->
+  <button class="apply-btn" onclick="applyJob()">Apply Now</button>
+
+</div>
+
+<script>
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "jobs.html";
+  }
+}
+
+function applyJob() {
+  alert("✅ Application Submitted Successfully!");
+}
+</script>
+
+</body>
+</html>

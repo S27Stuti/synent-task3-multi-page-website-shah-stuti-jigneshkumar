@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InternConnect</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    /* ============================================
+   SERVICES SECTION
+   ============================================ */
+
+.services {
+    padding: 80px 8%;
+    text-align: center;
+    background: #0A0A0A;
+    color: white;
+}
+
+.services h2 {
+    font-size: 42px;
+    color: #D4A943;
+    margin-bottom: 12px;
+}
+
+.services .section-sub {
+    color: #888;
+    font-size: 15px;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* SERVICES CARDS LAYOUT */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 280px); /* 3 cards per row */
+    justify-content: center; /* center whole grid */
+    gap: 25px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+/* SINGLE CARD */
+.card {
+    width: 280px;
+    padding: 32px 24px;
+    border-radius: 16px;
+    background: #111111;
+    border: 1px solid #222222;
+    transition: 0.3s ease;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* HOVER EFFECT */
+.card:hover {
+    border-color: #D4A943;
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(212,169,67,0.2);
+}
+
+/* ICON */
+.card i {
+    font-size: 28px;
+    color: #D4A943;
+    margin-bottom: 16px;
+    display: block;
+}
+
+/* TITLE */
+.card h3 {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* DESCRIPTION */
+.card p {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 992px) {
+    .cards {
+        grid-template-columns: repeat(2, 280px);
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .services {
+        padding: 60px 5%;
+    }
+
+    .services h2 {
+        font-size: 32px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 320px;
+        margin: auto;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .services h2 {
+        font-size: 28px;
+    }
+
+    .card {
+        padding: 24px 18px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    .card p {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <h1>
+    <span class="intern">Intern</span>Connect
+  </h1>
+  <style>
+    .intern { color: #D4A943; }
+  </style>
+
+  <nav>
+    <a href="index.html"><b>Home</b></a>
+    <a href="jobs.html">Jobs</a>
+    <a href="internship.html">Internships</a>
+    <a href="course.html">Courses</a>
+  </nav>
+
+  <!-- auth.js dynamically update karega isko login ke baad -->
+  <div class="header-right">
+    <a href="login.html"><b>Login</b></a>
+    <a href="register.html" class="register"><b>Register</b></a>
+    <a href="profile.html" class="profile-link">
+      <i class="fa-solid fa-user"></i>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+
+  <h1>
+    Find Your <span>Dream Career</span> Faster
+  </h1>
+
+  <p style="color:white">Explore Jobs, Internships & Courses — all in one place.</p>
+
+  <!-- SEARCH BOX -->
+  <div class="search-box">
+
+    <div class="field">
+      <i class="fa fa-search"></i>
+      <input type="text" placeholder="Role or Keyword">
+    </div>
+
+    <!-- LOCATION DROPDOWN -->
+    <div class="field">
+      <i class="fa fa-location-dot"></i>
+      <select>
+        <option style="color:gray">Select City</option>
+        <!-- Gujarat -->
+        <option>Ahmedabad</option>
+        <option>Vadodara</option>
+        <option>Surat</option>
+        <option>Rajkot</option>
+        <option>Gandhinagar</option>
+        <!-- Maharashtra -->
+        <option>Mumbai</option>
+        <option>Pune</option>
+        <option>Nagpur</option>
+        <option>Nashik</option>
+        <!-- Karnataka -->
+        <option>Bangalore</option>
+        <option>Mysore</option>
+        <option>Hubli</option>
+        <!-- Telangana -->
+        <option>Hyderabad</option>
+        <option>Warangal</option>
+        <!-- Tamil Nadu -->
+        <option>Chennai</option>
+        <option>Coimbatore</option>
+        <option>Madurai</option>
+        <!-- Delhi NCR -->
+        <option>Delhi</option>
+        <option>Noida</option>
+        <option>Gurgaon</option>
+        <option>Faridabad</option>
+        <!-- West Bengal -->
+        <option>Kolkata</option>
+        <option>Durgapur</option>
+        <!-- Rajasthan -->
+        <option>Jaipur</option>
+        <option>Udaipur</option>
+        <option>Jodhpur</option>
+        <!-- Uttar Pradesh -->
+        <option>Lucknow</option>
+        <option>Kanpur</option>
+        <option>Varanasi</option>
+        <!-- Madhya Pradesh -->
+        <option>Indore</option>
+        <option>Bhopal</option>
+        <!-- Punjab -->
+        <option>Chandigarh</option>
+        <option>Ludhiana</option>
+        <!-- Kerala -->
+        <option>Kochi</option>
+        <option>Trivandrum</option>
+        <!-- Andhra Pradesh -->
+        <option>Visakhapatnam</option>
+        <option>Vijayawada</option>
+        <!-- Others -->
+        <option>Goa</option>
+        <option>Patna</option>
+        <option>Ranchi</option>
+        <option>Bhubaneswar</option>
+        <option>Dehradun</option>
+        <option>Shillong</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <i class="fa fa-briefcase"></i>
+      <select>
+        <option style="color:gray">Remote</option>
+        <option>Onsite</option>
+        <option>Hybrid</option>
+        <style>
+          option {
+            color:gray;
+          }
+        </style>
+      </select>
+    </div>
+    
+    <button class="explore-btn" onclick="explore()"><b>Explore</b></button>
+
+  </div>
+
+</section>
+
+<!-- SERVICES -->'
+ 
+
+
+
+
+<section class="services">
+
+  <h2 style="font-size:250%">Our Services</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <i class="fa-solid fa-briefcase"></i>
+      <h3>Jobs</h3>
+      <p>Find the best job opportunities.</p>
+      <br>
+      <a href="jobs.html"><button class="explore-btn"><b>Explore</b></button></a> 
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-laptop-code"></i>
+      <h3>Internships</h3>
+      <p>Gain real-world experience.</p>
+      <br>
+      <a href="internship.html"><button class="explore-btn"><b>Explore</b></button></a> 
+    </div>
+
+    <div class="card">
+      <i class="fa-solid fa-book"></i>
+      <h3>Courses</h3>
+      <p>Upgrade your skills online.</p>
+      <br>
+      <a href="course.html"><button class="explore-btn"><b>Explore</b></button></a> 
+    </div>
+
+        <div class="card">
+      <i class="fa-solid fa-laptop-code"></i>
+      <h3>Post the Job/Internship</h3>
+      <p>Gain real-world experience.</p>
+      <br>
+      <a href="pji.html"><button class="explore-btn"><b>Explore</b></button></a> 
+    </div>
+ <div class="card">
+    <i class="fa-solid fa-building"></i>
+      
+      <h3>Create Company Profile</h3>
+      <p>Create profile and hire interns easily.</p>
+      <br>
+      <a href="ccprofile.html"><button class="explore-btn"><b>Explore</b></button></a> 
+    </div>
+     <div class="card">
+      <i class="fa-solid fa-file-lines"></i>
+      <h3>Resume Builder</h3>
+      <p>Build professional resumes in minutes.</p>
+      <br>
+      <a href="resume.html"><button class="explore-btn"><b>Explore</b></button></a> 
+    </div>
+
+
+
+  </div>
+
+</section>
+
+
+<!-- WHY CHOOSE US -->
+<section class="why-section">
+    <h2>Why Choose InternConnect?</h2>
+    <p>Your one-stop platform for career growth and opportunities.</p>
+
+    <div class="why-container">
+
+        <div class="why-card">
+            <i class="fa-solid fa-briefcase"></i>
+            <h3>Jobs & Internships</h3>
+            <p style="color:gray">
+                Find verified jobs and internships from trusted companies.
+                Students can directly apply and start building their careers.
+            </p>
+        </div>
+
+        <div class="why-card">
+            <i class="fa-solid fa-book-open"></i>
+            <h3>Free Courses</h3>
+            <p style="color:gray">
+                Access free courses to improve technical and soft skills
+                without paying anything.
+            </p>
+        </div>
+
+        <div class="why-card">
+            <i class="fa-solid fa-circle-question"></i>
+            <h3>Quiz Practice</h3>
+            <p style="color:gray">
+                Solve quizzes regularly to test your knowledge and improve
+                learning with practical questions.
+            </p>
+        </div>
+
+        <div class="why-card">
+            <i class="fa-solid fa-certificate"></i>
+            <h3>Certificates</h3>
+            <p style="color: gray;">
+                Earn certificates after course completion to strengthen
+                your resume and LinkedIn profile.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- FAQ -->
+<section class="faq-section">
+    <h2>Technical Insights</h2>
+    <p>Common questions users ask about InternConnect</p>
+
+    <div class="faq-box">
+
+        <div class="faq-item">
+            <button class="faq-btn">
+                What is InternConnect?
+                <span>+</span>
+            </button>
+            <div class="faq-content">
+                <p style="color:gray">
+                    InternConnect is a career platform where students can explore
+                    jobs, internships, free courses, quizzes, and certificates.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-btn">
+                Can students apply directly?
+                <span>+</span>
+            </button>
+            <div class="faq-content">
+                <p style="color:gray">
+                    Yes, students can directly apply for jobs and internships
+                    through the platform.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-btn">
+                Are all courses free?
+                <span>+</span>
+            </button>
+            <div class="faq-content">
+                <p style="color:gray">
+                    Yes, all learning resources and courses are available free
+                    for students.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-btn">
+                Do I get certificates?
+                <span>+</span>
+            </button>
+            <div class="faq-content">
+                <p style="color:gray">
+                    Yes, certificates are provided after successful course completion.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+    <h2>What Our Users Say</h2>
+    <p>Trusted by students and freshers</p>
+
+    <div class="testimonial-container">
+
+        <div class="testimonial-card">
+            <div class="user-info">
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+                <div>
+                    <h3>Riya Patel</h3>
+                    <span>Computer Engineering Student</span>
+                </div>
+            </div>
+            <div class="stars">★★★★★</div>
+            <p>InternConnect helped me find my first internship quickly. The platform is simple, useful, and beginner friendly.</p>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="user-info">
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+                <div>
+                    <h3>Aditya Shah</h3>
+                    <span>Frontend Developer</span>
+                </div>
+            </div>
+            <div class="stars">★★★★★</div>
+            <p>Free courses and certificates improved my resume before placement season.</p>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="user-info">
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+                <div>
+                    <h3>Neha Joshi</h3>
+                    <span>IT Student</span>
+                </div>
+            </div>
+            <div class="stars">★★★★★</div>
+            <p>Quiz practice section is amazing for testing knowledge and improving skills.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <a href="about.html" style="text-decoration:none;"><h3>InternConnect</h3></a>
+      <p>Connecting students with jobs, internships, and career growth opportunities.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="term.html">Term & Condition</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Companies</h4>
+      <ul>
+        <li><a href="#">Nexora Technologies</a></li>
+        <li><a href="#">ByteFusion Labs</a></li>
+        <li><a href="#">QuantumGrid Systems</a></li>
+        <li><a href="#">CloudNova Solutions</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 InternConnect. All rights reserved.
+  </div>
+</footer>
+
+<!-- auth.js PEHLE load karo, phir script.js -->
+
+<script src="script.js"></script>
+
+</body>
+</html>

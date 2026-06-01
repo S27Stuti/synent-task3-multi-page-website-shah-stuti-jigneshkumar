@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Business Analyst Intern</title>
+  <link rel="stylesheet" href="bai.css">
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<div class="job-container">
+
+  <h1 style="color:gold">Business Analyst Intern</h1>
+  <p class="company">InsightEdge Analytics</p>
+
+  <p class="tag">📊 Work from Home / Hybrid</p>
+
+  <div class="details">
+    <span>Start Date: Immediately</span>
+    <span>Stipend: ₹ 15,000 - 25,000 /month</span>
+    <span>Duration: 3-6 Months</span>
+    <span>Apply By: 20 June</span>
+  </div>
+
+  <div class="badges">
+    <span class="green">Actively Hiring</span>
+    <span class="blue">Internship</span>
+  </div>
+
+  <!-- ABOUT -->
+  <h2>About the job</h2>
+  <p class="sub">Key Responsibilities:</p>
+
+  <ul>
+    <li>Analyze business data and generate insights</li>
+    <li>Create reports and dashboards using tools like Excel or Power BI</li>
+    <li>Assist in requirement gathering and documentation</li>
+    <li>Work with teams to improve business processes</li>
+    <li>Support decision-making with data-driven analysis</li>
+  </ul>
+
+  <!-- SKILLS -->
+  <h2>Skills Required</h2>
+  <div class="skills">
+    <span>Excel</span>
+    <span>SQL</span>
+    <span>Power BI</span>
+    <span>Data Analysis</span>
+    <span>Communication</span>
+    <span>Problem Solving</span>
+  </div>
+
+  <!-- PERKS -->
+  <h2>Perks</h2>
+  <div class="skills">
+    <span>Certificate</span>
+    <span>Flexible Hours</span>
+    <span>Work from Home Option</span>
+    <span>Letter of Recommendation</span>
+  </div>
+
+  <p class="openings">Number of Opening: 5</p>
+
+  <!-- APPLY BUTTON -->
+  <button class="apply-btn" onclick="applyJob()">Apply Now</button>
+
+</div>
+
+<script>
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "jobs.html";
+  }
+}
+
+function applyJob() {
+  alert("✅ Application Submitted Successfully!");
+}
+</script>
+
+</body>
+</html>

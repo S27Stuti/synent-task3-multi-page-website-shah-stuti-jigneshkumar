@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cyber Security Intern</title>
+  <link rel="stylesheet" href="cs.css">
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<div class="job-container">
+
+  <h1 style="color:gold">Cyber Security Intern</h1>
+  <p class="company">SecureNet Technologies</p>
+
+  <p class="tag">🔐 Work from Home / Hybrid</p>
+
+  <div class="details">
+    <span>Start Date: Immediately</span>
+    <span>Stipend: ₹ 18,000 - 30,000 /month</span>
+    <span>Duration: 3-6 Months</span>
+    <span>Apply By: 25 June</span>
+  </div>
+
+  <div class="badges">
+    <span class="green">Actively Hiring</span>
+    <span class="blue">Internship</span>
+  </div>
+
+  <!-- ABOUT -->
+  <h2>About the job</h2>
+  <p class="sub">Key Responsibilities:</p>
+
+  <ul>
+    <li>Monitor systems for security threats and vulnerabilities</li>
+    <li>Assist in penetration testing and vulnerability assessments</li>
+    <li>Implement security measures and best practices</li>
+    <li>Analyze logs and detect suspicious activities</li>
+    <li>Support in incident response and security audits</li>
+  </ul>
+
+  <!-- SKILLS -->
+  <h2>Skills Required</h2>
+  <div class="skills">
+    <span>Networking</span>
+    <span>Ethical Hacking</span>
+    <span>Cybersecurity Basics</span>
+    <span>Linux</span>
+    <span>Penetration Testing</span>
+    <span>Security Tools</span>
+  </div>
+
+  <!-- PERKS -->
+  <h2>Perks</h2>
+  <div class="skills">
+    <span>Certificate</span>
+    <span>Flexible Hours</span>
+    <span>Work from Home Option</span>
+    <span>Letter of Recommendation</span>
+  </div>
+
+  <p class="openings">Number of Opening: 4</p>
+
+  <!-- APPLY BUTTON -->
+  <button class="apply-btn" onclick="applyJob()">Apply Now</button>
+
+</div>
+
+<script>
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "jobs.html";
+  }
+}
+
+function applyJob() {
+  alert("✅ Application Submitted Successfully!");
+}
+</script>
+
+</body>
+</html>
