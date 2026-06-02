@@ -3,6 +3,15 @@
 
 A modern and responsive multi-page website developed using HTML, CSS, and JavaScript. The project focuses on creating an attractive user interface, smooth navigation, and a user-friendly browsing experience across different devices.
 
+## Project Demo
+
+🎥 YouTube Demo Video:
+https://youtu.be/pUZ41dvMaio?si=Aw1wjpeIDnfI69hM
+
+## Documentation
+
+📄 Project Report: Available in this repository
+
 ## 🚀 Live Demo
 
 🔗 Live Website: https://bright-profiterole-e896e7.netlify.app/
