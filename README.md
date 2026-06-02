@@ -5,12 +5,13 @@ A modern and responsive multi-page website developed using HTML, CSS, and JavaSc
 
 ## Project Demo
 
-🎥 YouTube Demo Video:
-https://youtu.be/pUZ41dvMaio?si=Aw1wjpeIDnfI69hM
+🎥 YouTube Demo Video: https://youtu.be/pUZ41dvMaio?si=Aw1wjpeIDnfI69hM
 
 ## Documentation
 
 📄 Project Report: Available in this repository
+
+📝 Internship Blog: https://medium.com/@stutu2004shah/my-web-development-internship-journey-at-synent-technologies-8b5065f1eb9d
 
 ## 🚀 Live Demo
 
